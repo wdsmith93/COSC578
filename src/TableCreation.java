@@ -27,9 +27,9 @@ public class TableCreation {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String Student = "CREATE TABLE STUDENT " + "(FName VARCHAR(15)," + " Middle VARCHAR(15),"
-				+ " LName VARCHAR(15)," + " SSN CHAR(9) NOT NULL," + "Sid VARCHAR(15)," + "Perm_address VARCHAR(30),"
-				+ "Current_adress VARCHAR(30)," + "Grant_Auth VARCHAR(10)," + "Email_id VARCHAR(20),"
+		String Student = "CREATE TABLE STUDENT " + "(FName VARCHAR(35)," + " Middle VARCHAR(35),"
+				+ " LName VARCHAR(35)," + " SSN CHAR(9) NOT NULL," + "Sid VARCHAR(15)," + "Perm_address VARCHAR(255),"
+				+ "Current_adress VARCHAR(255)," + "Grant_Auth VARCHAR(10)," + "Email_id VARCHAR(255),"
 				+ "Sex VARCHAR(2), " + "DOB DATE," + "Advisor_Id INT," + "PRIMARY KEY(SSN),"
 				+ "FOREIGN KEY (Advisor_Id) REFERENCES INSTRUCTOR(Instructor_Id),"
 				+ "FOREIGN KEY (Sid) REFERENCES IDCARD(Id_No))";
@@ -44,25 +44,25 @@ public class TableCreation {
 				+ " Course_Desc VARCHAR(30)," + " Begin_date DATE," + "End_date DATE," + "Instructor_Id INT,"
 				+ "PRIMARY KEY(Course_Id)," + "FOREIGN KEY (Instructor_Id) REFERENCES INSTRUCTOR(Instructor_Id))";
 
-		String Instructor = "CREATE TABLE INSTRUCTOR " + "(Instructor_Id INT NOT NULL ," + " First VARCHAR(15),"
-				+ " Middle VARCHAR(15)," + " Last VARCHAR(15)," + "Dept_Num INT NOT NULL,"
+		String Instructor = "CREATE TABLE INSTRUCTOR " + "(Instructor_Id INT NOT NULL ," + " First VARCHAR(35),"
+				+ " Middle VARCHAR(35)," + " Last VARCHAR(35)," + "Dept_Num INT NOT NULL,"
 				+ "PRIMARY KEY(Instructor_Id)," + "FOREIGN KEY (Dept_Num) REFERENCES DEPARTMENT(Dept_Num))";
 
-		String Department = "CREATE TABLE DEPARTMENT " + "(Dept_Name VARCHAR(15)," + " Dept_Num INT NOT NULL,"
+		String Department = "CREATE TABLE DEPARTMENT " + "(Dept_Name VARCHAR(35)," + " Dept_Num INT NOT NULL,"
 				+ " Office_No INT ," + " Office_Ph_No VARCHAR(10)," + "PRIMARY KEY(Dept_Num))";
 
 		String Prereq = "CREATE TABLE PREREQUISITE " + "(Course_Id VARCHAR(15) NOT NULL," + " PreReqId VARCHAR(15),"
 				+ "PRIMARY KEY(Course_Id,PreReqId)," + "FOREIGN KEY (Course_Id) REFERENCES COURSE(Course_Id))";
 
-		String IdCard = "CREATE TABLE IDCARD " + "(Id_No VARCHAR(15) NOT NULL," + " Name VARCHAR(15),"
+		String IdCard = "CREATE TABLE IDCARD " + "(Id_No VARCHAR(15) NOT NULL," + " Name VARCHAR(35),"
 				+ "Sex VARCHAR(2), " + "DOB DATE," + "Date_Issued DATE," + "Expire_Date DATE," + "Admin_id VARCHAR(15),"
 				+ "PRIMARY KEY(Id_No)," + "FOREIGN KEY (Admin_Id) REFERENCES ADMIN(Admin_Id))";
 
-		String Admin = "CREATE TABLE ADMIN " + "(Admin_Id VARCHAR(15) NOT NULL," + " FName VARCHAR(15),"
-				+ " Middle VARCHAR(15)," + " LName VARCHAR(15)," + " Username VARCHAR(30)," + "Password VARCHAR(30),"
+		String Admin = "CREATE TABLE ADMIN " + "(Admin_Id VARCHAR(15) NOT NULL," + " FName VARCHAR(35),"
+				+ " Middle VARCHAR(35)," + " LName VARCHAR(35)," + " Username VARCHAR(70)," + "Password VARCHAR(30),"
 				+ "PRIMARY KEY(Admin_Id))";
 
-		String Classroom = "CREATE TABLE CLASSROOM " + "(Class_Id INT NOT NULL," + " Location VARCHAR(20),"
+		String Classroom = "CREATE TABLE CLASSROOM " + "(Class_Id INT NOT NULL," + " Location VARCHAR(70),"
 				+ " Capacity INT," + "PRIMARY KEY(Class_Id))";
 
 		String ClassCourse = "CREATE TABLE CLASSCOURSE " + "(Class_Id INT NOT NULL,"
