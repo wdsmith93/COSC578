@@ -1,9 +1,9 @@
 package edu.towson;
 public class Administration {
-private String SSN;
-private String DOB;
+private String ssn;
+private String dob;
 private String idDesc;
-private String ID;
+private String id;
 private String idIssueDate;
 private String idExpDate;
 private String fName;
@@ -13,29 +13,30 @@ private String currAddLine2;
 private String currAddCity;
 private String currState;
 private String currAddZip;
-public String getSSN() {
-	return SSN;
-}
-public void setSSN(String sSN) {
-	SSN = sSN;
-}
-public String getDOB() {
-	return DOB;
-}
-public void setDOB(String dOB) {
-	DOB = dOB;
-}
+
 public String getIdDesc() {
 	return idDesc;
 }
 public void setIdDesc(String idDesc) {
 	this.idDesc = idDesc;
 }
-public String getID() {
-	return ID;
+public String getSsn() {
+	return ssn;
 }
-public void setID(String iD) {
-	ID = iD;
+public void setSsn(String ssn) {
+	this.ssn = ssn;
+}
+public String getDob() {
+	return dob;
+}
+public void setDob(String dob) {
+	this.dob = dob;
+}
+public String getId() {
+	return id;
+}
+public void setId(String id) {
+	this.id = id;
 }
 public String getIdIssueDate() {
 	return idIssueDate;

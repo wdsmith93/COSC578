@@ -2,7 +2,7 @@ package edu.towson;
 public class Student {
 private String fName;
 private String lName;
-private String ID;
+private String id;
 private String homePhNo;
 private String workPhNo;
 private String emailAdd;
@@ -14,11 +14,11 @@ private String currZip;
 private String permAdd;
 private String permState;
 private String perZip;
-private String DOB;
+private String dob;
 private String sex;
 private String degreeProg;
 private String citizenshipStatus;
-private String SSN;
+private String ssn;
 private String grantDetail;
 public String getfName() {
 	return fName;
@@ -31,12 +31,6 @@ public String getlName() {
 }
 public void setlName(String lName) {
 	this.lName = lName;
-}
-public String getID() {
-	return ID;
-}
-public void setID(String iD) {
-	ID = iD;
 }
 public String getHomePhNo() {
 	return homePhNo;
@@ -62,17 +56,35 @@ public String getCurrAdd() {
 public void setCurrAdd(String currAdd) {
 	this.currAdd = currAdd;
 }
-public String getCurrAddline2() {
-	return currAddLine2;
-}
-public void setCurrAddline2(String currAddline2) {
-	this.currAddLine2 = currAddline2;
-}
 public String getCurrAddCity() {
 	return currAddCity;
 }
 public void setCurrAddCity(String currAddCity) {
 	this.currAddCity = currAddCity;
+}
+public String getId() {
+	return id;
+}
+public void setId(String id) {
+	this.id = id;
+}
+public String getCurrAddLine2() {
+	return currAddLine2;
+}
+public void setCurrAddLine2(String currAddLine2) {
+	this.currAddLine2 = currAddLine2;
+}
+public String getDob() {
+	return dob;
+}
+public void setDob(String dob) {
+	this.dob = dob;
+}
+public String getSsn() {
+	return ssn;
+}
+public void setSsn(String ssn) {
+	this.ssn = ssn;
 }
 public String getCurrState() {
 	return currState;
@@ -104,12 +116,6 @@ public String getPerZip() {
 public void setPerZip(String perZip) {
 	this.perZip = perZip;
 }
-public String getDOB() {
-	return DOB;
-}
-public void setDOB(String dOB) {
-	DOB = dOB;
-}
 public String getSex() {
 	return sex;
 }
@@ -127,12 +133,6 @@ public String getCitizenshipStatus() {
 }
 public void setCitizenshipStatus(String citizenshipStatus) {
 	this.citizenshipStatus = citizenshipStatus;
-}
-public String getSSN() {
-	return SSN;
-}
-public void setSSN(String sSN) {
-	SSN = sSN;
 }
 public String getGrantDetail() {
 	return grantDetail;
