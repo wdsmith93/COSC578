@@ -11,6 +11,3 @@ local.properties
 !gradle*.jar
 **/target/
 *.tar.gz
-**.classpath
-**.project
-**.metadata
