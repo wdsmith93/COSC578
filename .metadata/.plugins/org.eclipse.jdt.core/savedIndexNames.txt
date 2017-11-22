@@ -1,2 +1,0 @@
-INDEX VERSION 1.129+C:\Users\navya\DBMS\project\COSC578\.metadata\.plugins\org.eclipse.jdt.core
-890962878.index
