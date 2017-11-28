@@ -3,9 +3,9 @@ package edu.towson;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.security.SecureRandom;
 import java.util.concurrent.ThreadLocalRandom;
 import java.sql.*;
+import java.util.Random;
 
 public class Main {
 
@@ -21,8 +21,7 @@ public class Main {
     private static String[] cityNameArray = new String[432];
     private static String[] zipCodeArray = new String[432];
     private static String[] statesArray = new String[10];
-    private static final SecureRandom randomNumber = new SecureRandom();
-    
+    private static Random rand = new Random(System.currentTimeMillis());
 
     public static void main(String[] args) {
         //Generated random data lists via this website: https://www.randomlists.com/random-names
@@ -34,12 +33,174 @@ public class Main {
         readFromFile(STATES_INPUT, statesArray);
 
         createTables();
+        //After creating the tables, the following methods will generate fake data for the individual tables
         initDepartment();
+        initInstructor();
+        initClassroom();
+        initCourse();
         
 
 
 
     }
+    
+      
+    /**
+     * Allows single records to be inserted into the COURSE table
+     * @param id  course id
+     * @param title course title
+     * @param description  course description
+     * @param bDate  course begin date
+     * @param eDate  course end date
+     * @param iId  instructor id
+     */
+    private static void insertIntoCourse(String id, String title, String description, String bDate, String eDate, int iId){
+        String sql = "INSERT INTO Course(Course_Id, Course_Title, Course_Desc, Begin_date, End_date, Instructor_Id) VALUES(?,?,?,?,?,?)";
+        
+        try (Connection conn = Main.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1, id);
+            pstmt.setString(2, title);
+            pstmt.setString(3, description);
+            pstmt.setString(4, bDate);
+            pstmt.setString(5, eDate);
+            pstmt.setInt(6, iId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    /**
+     * Internal method to populate the Course table with random data
+     */
+    private static void initCourse(){
+        String[] courseId = new String[20];  
+        int id = 11000;
+        String[] courseTitle = new String[20];
+        String[] courseDesc = new String[20];
+        String[] begin = new String[20];
+        String[] end = new String[20];
+        String[] beginDateArray = new String[]{"2017-08-28", "2017-08-28", "2017-09-25", "2017-10-23", "2018-01/02"};
+        String[] endDateArray = new String[]{"2017-12-15", "2017-10-21", "2017-12-15", "2017-12-15", "2018-01-21"};
+        String[] titleArray = new String[]{"BIO 212", "ENG 101", "BIO 102", "CHE 101", "MAT 128", "CHE 213", "BIO 207", "MAT 125", "ACCT 235",
+            "ACCT 241", "BUAD 207", "MKTG 223", "HLF", "CLT 100", "CSC 108", "BCWB 252", "ITDB 241", "ITSA 233", "CISS 116", "MAT 125"}; 
+        String[] descArray = new String[]{"Microbiology", "English Writing", "General Biology", "General Chemistry I", "College Algebra",
+            "Organic Chemistry", "Genetics", "Finite Math", "Cost Accounting", "Auditing Concepts", "Business Law I", "Marketing",
+            "Health and Life Fitness", "Computer Literacy", "Programming in C", "Introduction to JavaScript", "Database Programming",
+            "Ethical Hacking", "Structured Design", "Finite Mathematics"};
+        int[] iId = new int[50];
+        
+        for (int i = 0; i < courseId.length; i++){
+            id = id + 1;
+            courseId[i] = String.valueOf(id);
+            int selection = Integer.valueOf(genRandomNumber(0,titleArray.length - 1));
+            courseTitle[i] = titleArray[selection];
+            courseDesc[i] = descArray[selection];
+            selection = Integer.valueOf(genRandomNumber(0,beginDateArray.length - 1));
+            begin[i] = beginDateArray[selection];
+            end[i] = endDateArray[selection];
+            iId[i] = Integer.valueOf(genRandomNumber(10000000, 10000100));
+            
+        }
+        for (int j = 0; j < courseId.length; j++){
+            insertIntoCourse(courseId[j], courseTitle[j], courseDesc[j], begin[j], end[j], iId[j]);
+        }
+    }
+    
+    /**
+     * Allows single records to be inserted into the CLASSROOM table
+     * @param id  classroom id
+     * @param location classroom location
+     * @param capacity  classroom capacity
+     */
+    private static void insertIntoClassroom(int id, String location, int capacity){
+        String sql = "INSERT INTO CLASSROOM(Class_Id, Location, Capacity) VALUES(?,?,?)";
+        
+        try (Connection conn = Main.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1, id);
+            pstmt.setString(2, location);
+            pstmt.setInt(3, capacity);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    /**
+     * Internal method to populate the Classroom table with random data
+     */
+    private static void initClassroom(){
+        int[] cId = new int[100];  //int max 11, increment unique
+        int id = 1000;
+        String[] locationArray = new String[] {"Liberty Heights", "Downtown Harbor", "Reisterstown Plaza", "Life Sciences", "NWTC"};
+        String[] cLocation = new String[100];
+        int[] cCapacity = new int[100];
+        
+        for (int i = 0; i < cId.length; i++){
+            id = id + 1;
+            cId[i] = id;
+            cLocation[i] = pickFromArray(locationArray);
+            cCapacity[i] = Integer.valueOf(genRandomNumber(15, 50));
+            
+        }
+        for (int j = 0; j < cId.length; j++){
+            insertIntoClassroom(cId[j], cLocation[j], cCapacity[j]);
+        }
+    }
+    
+    /**
+     * Allows single records to be inserted into the INSTRUCTOR table
+     * @param id instructor id
+     * @param fName  first name
+     * @param mName  middle name
+     * @param lName  last name
+     * @param dNum   department number
+     */
+    private static void insertIntoInstructor(int id, String fName, String mName, String lName, int dNum){
+        String sql = "INSERT INTO INSTRUCTOR(Instructor_Id, First, Middle, Last, Dept_Num) VALUES(?,?,?,?,?)";
+        
+        try (Connection conn = Main.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1, id);
+            pstmt.setString(2, fName);
+            pstmt.setString(3, mName);
+            pstmt.setString(4, lName);
+            pstmt.setInt(5, dNum);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    /**
+     * Internal method to populate the Instructor table with random data
+     */
+    private static void initInstructor(){
+        int[] iId = new int[100];  //int max 11, increment unique
+        int id = 10000000;
+        String[] iFName = new String[100];
+        String[] iMName = new String[100];
+        String[] iLName = new String[100];
+        String[] iDNumArray = new String[]{"1", "2", "3", "4", "5", "6", "7"}; //limited to choices between 1 and 7
+        int[] iDNum = new int[100];
+        
+        for (int i = 0; i < iId.length; i++){
+            id = id + 1;
+            iId[i] = id;
+            iFName[i] = pickFromArray(firstNameArray);
+            iMName[i] = pickFromArray(firstNameArray);
+            iLName[i] = pickFromArray(lastNameArray);
+            iDNum[i] = Integer.valueOf(pickFromArray(iDNumArray));
+            
+        }
+        for (int j = 0; j < iId.length; j++){
+            insertIntoInstructor(iId[j], iFName[j], iMName[j], iLName[j], iDNum[j]);
+        }
+    }
+    
+    
     /**
      * Allows single records to be inserted into the DEPARTMENT table
      * @param deptName name of dept
@@ -220,7 +381,7 @@ public class Main {
         String s = "";
         int first;
         for (int i = 0; i < length; i++) {
-            first = 0 + randomNumber.nextInt(10);
+            first = 0 + rand.nextInt(10);
             String newStr = s + first;
             s = newStr;
         }
@@ -253,7 +414,7 @@ public class Main {
      * @return random string from the array
      */
     public static String pickFromArray(String[] array){
-        int first = 0 + randomNumber.nextInt(array.length);
+        int first = 0 + rand.nextInt(array.length);
         return array[first];
     }
     
@@ -262,7 +423,7 @@ public class Main {
             "juno", "netzero", "postmark", "hushmail", "inbox", "mail", "icloud"};
         int random;
         String result = "";
-        random = 0 + randomNumber.nextInt(emailProvider.length);
+        random = 0 + rand.nextInt(emailProvider.length);
         result = fname + "." + lname + "@" + emailProvider[random] + ".com";
         
         return result;        
