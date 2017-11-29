@@ -1,13 +1,15 @@
 package edu.towson;
 
+import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 import java.sql.*;
 import java.util.Random;
+import javax.swing.JFrame;
 
-public class Main {
+public class Main implements Runnable {
 
     private static final String FIRST_NAME_INPUT = "firstnames.txt";
     private static final String LAST_NAME_INPUT = "lastnames.txt";
@@ -23,6 +25,10 @@ public class Main {
     private static String[] statesArray = new String[10];
     private static Random rand = new Random(System.currentTimeMillis());
 
+    
+   
+    
+    
     public static void main(String[] args) {
         //Generated random data lists via this website: https://www.randomlists.com/random-names
         readFromFile(FIRST_NAME_INPUT, firstNameArray);
@@ -32,14 +38,27 @@ public class Main {
         readFromFile(ZIP_CODE_INPUT, zipCodeArray);
         readFromFile(STATES_INPUT, statesArray);
 
-        createTables();
+        //TODO: Uncomment the following lines!!
+        //createTables();
         //After creating the tables, the following methods will generate fake data for the individual tables
-        initDepartment();
-        initInstructor();
-        initClassroom();
-        initCourse();
+        //initDepartment();
+        //initInstructor();
+        //initClassroom();
+        //initCourse();
         
-
+        EventQueue.invokeLater(new Main());
+        
+    }
+        
+        @Override
+        public void run() {
+        JFrame frame = new JFrame("BCCC Database");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(new DatabaseView());
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    
 
 
     }
