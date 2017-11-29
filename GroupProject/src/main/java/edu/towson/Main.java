@@ -41,14 +41,251 @@ public class Main {
         initCourse();
         initAdmin();
         initIdcard();
+        initStudent();
+        initClassCourse();
+        initEnrolls();
+        initStudentPhNo();
+        initPreReq();
         
-
-
-
     }
     
     /**
-     * 
+     * Allows single records to be inserted into the PREREQUISITE table
+     * @param courseId  course id 
+     * @param preReqId prerequisite id
+     */
+    
+    private static void insertIntoPreReq(String courseId, String preReqId){
+        String sql = "INSERT INTO PREREQUISITE(Course_Id,PreReqId) VALUES(?,?)";
+        
+        try (Connection conn = Main.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1, courseId);
+            pstmt.setString(2, preReqId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    /**
+     * Internal method to populate the Prerequisite table with random data
+     */
+    private static void initPreReq(){
+    	String[] courseId = new String[14];
+    	String[] preReqId = new String[20];	
+        for (int i = 0; i < courseId.length; i++){
+        	courseId[i] = String.valueOf(genRandomNumber(11000, 11014));
+        	preReqId[i] = String.valueOf(genRandomNumber(11015, 11020));  
+        }
+        for (int j = 0; j < courseId.length; j++){
+        	insertIntoPreReq(courseId[j],preReqId[j]);
+        }
+    }
+    /**
+     * Allows single records to be inserted into the STUDENT_PHONE table
+     * @param sSSN  student SSN
+     * @param sPhone student phone number
+     */
+    
+    private static void insertIntoStudentPhno(String sSSN, String sPhone){
+        String sql = "INSERT INTO STUDENT_PHONE(Phone,SSN) VALUES(?,?)";
+        
+        try (Connection conn = Main.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1, sPhone);
+            pstmt.setString(2, sSSN);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    /**
+     * Internal method to populate the Student phone table with random data
+     */
+    private static void initStudentPhNo(){
+    	String[] sSSN = new String[20];
+    	String[] sPhone = new String[20];
+        for (int i = 0; i < sSSN.length; i++){
+        	sSSN[i] = String.valueOf(genRandomNumber(900000000, 900000020));
+        	sPhone[i] = "5"+String.valueOf(genRandomNumber(700000000, 700000020));  
+        }
+        for (int j = 0; j < sSSN.length; j++){
+        	insertIntoStudentPhno(sSSN[j],sPhone[j]);
+        }
+    }
+    
+    /**
+     * Allows single records to be inserted into the ENROLLS table
+     * @param sSSN  student SSN
+     * @param courseId course id
+     * @param sGrade grade received for course
+     */
+    
+    private static void insertIntoEnrolls(String sSSN, String courseId, String sGrade){
+        String sql = "INSERT INTO ENROLLS(SSN, Course_Id, Grade) VALUES(?,?,?)";
+        
+        try (Connection conn = Main.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1, sSSN);
+            pstmt.setString(2, courseId);
+            pstmt.setString(3, sGrade);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    /**
+     * Internal method to populate the Enrolls table with random data
+     */
+    private static void initEnrolls(){
+    	String[] sSSN = new String[20];
+    	String[] courseId = new String[20];
+    	String[] sGrade = new String[20];
+    	String[] gradeDetail = new String[]{"A","A-","B+","B","C","F"};
+        for (int i = 0; i < sSSN.length; i++){
+        	sSSN[i] = String.valueOf(genRandomNumber(900000000, 900000020));
+        	courseId[i] = String.valueOf(genRandomNumber(11000, 11020));  
+        	sGrade[i] = pickFromArray(gradeDetail);
+        }
+        for (int j = 0; j < sSSN.length; j++){
+        	insertIntoEnrolls(sSSN[j],courseId[j], sGrade[j]);
+        }
+    }
+    
+    /**
+     * Allows single records to be inserted into the CLASSCOURSE table
+     * @param courseId course id
+     * @param cId class id
+     * @param begin course begin date
+     */
+    private static void insertIntoClasscourse(String courseId, int cId, String begin){
+        String sql = "INSERT INTO CLASSCOURSE(Course_Id, Class_Id, Day) VALUES(?,?,?)";
+        
+        try (Connection conn = Main.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1, courseId);
+            pstmt.setInt(2, cId);
+            pstmt.setString(3, begin);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    /**
+     * Internal method to populate the Classcourse table with random data
+     */
+    private static void initClassCourse(){
+    	String[] courseId = new String[20];
+    	int[] cId = new int[20];
+    	String[] begin = new String[20];
+    	String[] beginDateArray = new String[]{"2017-08-28", "2017-08-28", "2017-09-25", "2017-10-23", "2018-01/02"};
+        for (int i = 0; i < courseId.length; i++){
+        	courseId[i] = String.valueOf(genRandomNumber(11000, 11020));  
+            cId[i] = Integer.valueOf(genRandomNumber(1000, 1100));
+            int selection = Integer.valueOf(genRandomNumber(0,beginDateArray.length - 1));
+            begin[i] = beginDateArray[selection];
+        }
+        for (int j = 0; j < cId.length; j++){
+        	insertIntoClasscourse(courseId[j], cId[j], begin[j]);
+        }
+    }
+    
+    /**
+     * Allows single records to be inserted into the STUDENT table
+     * @param sFname student first name
+     * @param sMiddle student middle name
+     * @param sLname student last name
+     * @param sSSN student SSN
+     * @param ssid student card id
+     * @param sPermAdd permanent address
+     * @param sCurrAdd current address
+     * @param sSex gender
+     * @param dob date of birth
+     * @param sAdvisorId  student's advisor id
+     * @param sGrantAuth grant authorization
+     * @param sEmailId student email address
+     */
+    
+	private static void insertIntoStudent(String sFname, String sMiddle, String sLname, String sSSN, String ssid,
+			String sPermAdd, String sCurrAdd, String sSex, String dob, int sAdvisorId, String sGrantAuth,
+			String sEmailId) {
+		String sql = "INSERT INTO STUDENT(FName , Middle , LName , SSN , Sid , Perm_address, Current_adress,Grant_Auth,Email_id,Sex,DOB,Advisor_Id ) "
+				+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+
+		try (Connection conn = Main.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, sFname);
+			pstmt.setString(2, sMiddle);
+			pstmt.setString(3, sLname);
+			pstmt.setString(4, sSSN);
+			pstmt.setString(5, ssid);
+			pstmt.setString(6, sPermAdd);
+			pstmt.setString(7, sCurrAdd);
+			pstmt.setString(8, sGrantAuth);
+			pstmt.setString(9, sEmailId);
+			pstmt.setString(10, sSex);
+			pstmt.setString(11, dob);
+			pstmt.setInt(12, sAdvisorId);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	/**
+	 * Internal method to populate the IDCARD table with random data
+	 */
+	private static void initStudent() {
+		String[] sFname = new String[100];
+		String[] sMiddle = new String[100];
+		String[] sLname = new String[100];
+		String[] sSSN = new String[20];
+		String[] ssid = new String[100];
+		String[] sPermAdd = new String[100];
+		String[] sCurrAdd = new String[100];
+		String[] sSex = new String[100];
+		String[] dob = new String[100];
+		int[] sAdvisorId = new int[100];
+		String[] sGrantAuth = new String[100];
+		String[] sEmailId = new String[100];
+		String[] genderArray = new String[] { "M", "F" };
+		String[] granthStatus = new String[] { "Y", "N" };
+		GregorianCalendar calendar = new GregorianCalendar();
+		for (int i = 0; i < sSSN.length; i++) {
+			sFname[i] = pickFromArray(firstNameArray);
+			sMiddle[i] = "";
+			sLname[i] = pickFromArray(lastNameArray);
+			sSSN[i] = String.valueOf(genRandomNumber(900000000, 900000020));
+			ssid[i] = String.valueOf(genRandomNumber(10000, 10100));
+			sPermAdd[i] = pickFromArray(streetNameArray) +" "+ pickFromArray(cityNameArray) +" "+ pickFromArray(statesArray)
+					+ pickFromArray(zipCodeArray);
+			sCurrAdd[i] = pickFromArray(streetNameArray) +" "+ pickFromArray(cityNameArray) +" " +pickFromArray(statesArray)
+					+ pickFromArray(zipCodeArray);
+			sSex[i] = pickFromArray(genderArray);
+			int year = randBetween(1970, 1993);
+			calendar.set(calendar.YEAR, year);
+			int dayOfYear = randBetween(1, calendar.getActualMaximum(calendar.DAY_OF_YEAR));
+			calendar.set(calendar.DAY_OF_YEAR, dayOfYear);
+			dob[i] = calendar.get(calendar.YEAR) + "-" + (calendar.get(calendar.MONTH) + 1) + "-"
+					+ calendar.get(calendar.DAY_OF_MONTH);
+			sAdvisorId[i] = Integer.valueOf(genRandomNumber(10000000, 10000100));
+			sGrantAuth[i] = pickFromArray(granthStatus);
+			sEmailId[i] = generateEmailAddress(sFname[i], sLname[i]);
+		}
+		for (int j = 0; j < sSSN.length; j++) {
+			insertIntoStudent(sFname[j], sMiddle[j], sLname[j], sSSN[j], ssid[j], sPermAdd[j], sCurrAdd[j], sSex[j],
+					dob[j], sAdvisorId[j], sGrantAuth[j], sEmailId[j]);
+		}
+	}
+	
+    
+    
+    /**
+     * Allows single records to be inserted into the IDCARD table
      * @param idNo Student id card number
      * @param sName student name
      * @param sex student gender
@@ -58,8 +295,9 @@ public class Main {
      * @param adminId admin id who issued id card
      */
     
-    private static void insertIntoSidCard(String idNo,String sName,String sex,String dob,String date_issue,String expire_date,int adminId){
-    	String sql = "INSERT INTO IDCARD(Id_No , Name , Sex , DOB , Date_Issued , Expire_Date, Admin_id ) VALUES(?,?,?,?,?,?,?)";
+	private static void insertIntoSidCard(String idNo, String sName, String sex, String dob, String date_issue,
+			String expire_date, int adminId) {
+		String sql = "INSERT INTO IDCARD(Id_No , Name , Sex , DOB , Date_Issued , Expire_Date, Admin_id ) VALUES(?,?,?,?,?,?,?)";
 
 		try (Connection conn = Main.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, idNo);
@@ -74,9 +312,7 @@ public class Main {
 			System.out.println(e.getMessage());
 		}
 
-    	
-    }
-    
+	}    
     
     /**
 	 * Internal method to populate the IDCARD table with random data
@@ -89,31 +325,39 @@ public class Main {
 		String[] dob = new String[100];
 		String[] date_issue = new String[100];
 		String[] expire_date = new String[100];
-		String[]genderArray = new String[]{"M","F"};
-		String[] idIssueArray = new String[]{"2017-08-28", "2017-08-28", "2017-09-25", "2017-10-23", "2018-01/02"};
-        String[] idExpireArray = new String[]{"2017-12-15", "2017-10-21", "2017-12-15", "2017-12-15", "2018-01-21"};
-        GregorianCalendar calendar = new GregorianCalendar();  
-        int[] adminId = new int[100];
-		for (int i = 0; i < idNo.length; i++){
-            id = id + 1;
-            idNo[i] = String.valueOf(id);
-            sName[i] = pickFromArray(firstNameArray);
-            sex[i] = pickFromArray(genderArray);
-           int selection = Integer.valueOf(genRandomNumber(0,idIssueArray.length - 1));
-           date_issue[i] = idIssueArray[selection];
-           expire_date[i] = idExpireArray[selection];
-           int  year = randBetween(1970, 1993);
-           calendar.set(calendar.YEAR, year);
-           int dayOfYear = randBetween(1, calendar.getActualMaximum(calendar.DAY_OF_YEAR));
-           calendar.set(calendar.DAY_OF_YEAR, dayOfYear);  
-           dob[i] =  calendar.get(calendar.YEAR) + "-" + (calendar.get(calendar.MONTH) + 1) + "-" + calendar.get(calendar.DAY_OF_MONTH);    
-           adminId[i] = Integer.valueOf(genRandomNumber(100000, 100100));
-                
+		String[] genderArray = new String[] { "M", "F" };
+		String[] idIssueArray = new String[] { "2017-08-28", "2017-08-28", "2017-09-25", "2017-10-23", "2018-01/02" };
+		String[] idExpireArray = new String[] { "2017-12-15", "2017-10-21", "2017-12-15", "2017-12-15", "2018-01-21" };
+		GregorianCalendar calendar = new GregorianCalendar();
+		int[] adminId = new int[100];
+		for (int i = 0; i < idNo.length; i++) {
+			id = id + 1;
+			idNo[i] = String.valueOf(id);
+			sName[i] = pickFromArray(firstNameArray);
+			sex[i] = pickFromArray(genderArray);
+			int selection = Integer.valueOf(genRandomNumber(0, idIssueArray.length - 1));
+			date_issue[i] = idIssueArray[selection];
+			expire_date[i] = idExpireArray[selection];
+			int year = randBetween(1970, 1993);
+			calendar.set(calendar.YEAR, year);
+			int dayOfYear = randBetween(1, calendar.getActualMaximum(calendar.DAY_OF_YEAR));
+			calendar.set(calendar.DAY_OF_YEAR, dayOfYear);
+			dob[i] = calendar.get(calendar.YEAR) + "-" + (calendar.get(calendar.MONTH) + 1) + "-"
+					+ calendar.get(calendar.DAY_OF_MONTH);
+			adminId[i] = Integer.valueOf(genRandomNumber(100000, 100100));
+
 		}
 		for (int j = 0; j < idNo.length; j++) {
-			insertIntoSidCard(idNo[j], sName[j], sex[j], dob[j], date_issue[j], expire_date[j],adminId[j]);
+			insertIntoSidCard(idNo[j], sName[j], sex[j], dob[j], date_issue[j], expire_date[j], adminId[j]);
 		}
 	}
+	
+	/**
+	 * 
+	 * @param start start year
+	 * @param end end year
+	 * @return
+	 */
 	public static int randBetween(int start, int end) {
         return start + (int)Math.round(Math.random() * (end - start));
     }
@@ -167,17 +411,17 @@ public class Main {
 			aFName[i] = pickFromArray(firstNameArray);
 			aMiddle[i] = pickFromArray(firstNameArray);
 			aLName[i] = pickFromArray(lastNameArray);
-			String result="";
+			String result = "";
 			for (int k = 0; k < len; k++) {
 				int index = (int) (random.nextFloat() * user.length());
-				result+=user.charAt(index);
+				result += user.charAt(index);
 			}
 			aUsername[i] = result;
-			len=10;
-			result="";
+			len = 10;
+			result = "";
 			for (int m = 0; m < len; m++) {
 				int index = (int) (random.nextFloat() * pword.length());
-				result+=pword.charAt(index);
+				result += pword.charAt(index);
 			}
 			aPassword[i] = result;
 		}
@@ -392,7 +636,7 @@ public class Main {
         String dbAddress = "jdbc:mysql://localhost:3306/";
         String dbName = "DBMS";
         String userName = "root";
-        String password = "root";
+        String password = "Y4!t2669989";
         Connection con = null; // represents connection to specific database
         // Load the JdbcOdbc Driver
         try {
