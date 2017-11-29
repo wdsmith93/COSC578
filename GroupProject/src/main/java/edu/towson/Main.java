@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 import java.sql.*;
+import java.util.GregorianCalendar;
 import java.util.Random;
 
 public class Main {
@@ -38,12 +39,152 @@ public class Main {
         initInstructor();
         initClassroom();
         initCourse();
+        initAdmin();
+        initIdcard();
         
 
 
 
     }
     
+    /**
+     * 
+     * @param idNo Student id card number
+     * @param sName student name
+     * @param sex student gender
+     * @param dob student date of birth
+     * @param date_issue id card issue date
+     * @param expire_date id card expire date
+     * @param adminId admin id who issued id card
+     */
+    
+    private static void insertIntoSidCard(String idNo,String sName,String sex,String dob,String date_issue,String expire_date,int adminId){
+    	String sql = "INSERT INTO IDCARD(Id_No , Name , Sex , DOB , Date_Issued , Expire_Date, Admin_id ) VALUES(?,?,?,?,?,?,?)";
+
+		try (Connection conn = Main.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, idNo);
+			pstmt.setString(2, sName);
+			pstmt.setString(3, sex);
+			pstmt.setString(4, dob);
+			pstmt.setString(5, date_issue);
+			pstmt.setString(6, expire_date);
+			pstmt.setString(7, String.valueOf(adminId));
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+
+    	
+    }
+    
+    
+    /**
+	 * Internal method to populate the IDCARD table with random data
+	 */
+	private static void initIdcard() {
+		String[] idNo = new String[100];
+		int id = 10000;
+		String[] sName = new String[100];
+		String[] sex = new String[100];
+		String[] dob = new String[100];
+		String[] date_issue = new String[100];
+		String[] expire_date = new String[100];
+		String[]genderArray = new String[]{"M","F"};
+		String[] idIssueArray = new String[]{"2017-08-28", "2017-08-28", "2017-09-25", "2017-10-23", "2018-01/02"};
+        String[] idExpireArray = new String[]{"2017-12-15", "2017-10-21", "2017-12-15", "2017-12-15", "2018-01-21"};
+        GregorianCalendar calendar = new GregorianCalendar();  
+        int[] adminId = new int[100];
+		for (int i = 0; i < idNo.length; i++){
+            id = id + 1;
+            idNo[i] = String.valueOf(id);
+            sName[i] = pickFromArray(firstNameArray);
+            sex[i] = pickFromArray(genderArray);
+           int selection = Integer.valueOf(genRandomNumber(0,idIssueArray.length - 1));
+           date_issue[i] = idIssueArray[selection];
+           expire_date[i] = idExpireArray[selection];
+           int  year = randBetween(1970, 1993);
+           calendar.set(calendar.YEAR, year);
+           int dayOfYear = randBetween(1, calendar.getActualMaximum(calendar.DAY_OF_YEAR));
+           calendar.set(calendar.DAY_OF_YEAR, dayOfYear);  
+           dob[i] =  calendar.get(calendar.YEAR) + "-" + (calendar.get(calendar.MONTH) + 1) + "-" + calendar.get(calendar.DAY_OF_MONTH);    
+           adminId[i] = Integer.valueOf(genRandomNumber(100000, 100100));
+                
+		}
+		for (int j = 0; j < idNo.length; j++) {
+			insertIntoSidCard(idNo[j], sName[j], sex[j], dob[j], date_issue[j], expire_date[j],adminId[j]);
+		}
+	}
+	public static int randBetween(int start, int end) {
+        return start + (int)Math.round(Math.random() * (end - start));
+    }
+    
+    /**
+     * Allows single records to be inserted into the ADMIN table
+     * @param AdminId Admin id
+     * @param aFName Admin first name
+     * @param aMiddle Admin middle name
+     * @param aLName Admin last name
+     * @param aUsername Admin user name
+     * @param aPassword Admin password
+     */
+	private static void insertIntoAdmin(String AdminId, String aFName, String aMiddle, String aLName, String aUsername,
+			String aPassword) {
+
+		String sql = "INSERT INTO ADMIN(Admin_Id, FName, Middle, LName, Username, Password) VALUES(?,?,?,?,?,?)";
+
+		try (Connection conn = Main.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, AdminId);
+			pstmt.setString(2, aFName);
+			pstmt.setString(3, aMiddle);
+			pstmt.setString(4, aLName);
+			pstmt.setString(5, aUsername);
+			pstmt.setString(6, aPassword);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
+	/**
+	 * Internal method to populate the Admin table with random data
+	 */
+	private static void initAdmin() {
+		String[] AdminId = new String[100];
+		int id = 100000;
+		String[] aFName = new String[100];
+		String[] aMiddle = new String[100];
+		String[] aLName = new String[100];
+		String[] aUsername = new String[100];
+		String[] aPassword = new String[100];
+		String user = "abcdefghijklmnopqrstuvwxyz";
+		String pword = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+		Random random = new Random();
+		int len = 8;
+		for (int i = 0; i < AdminId.length; i++) {
+			id = id + 1;
+			AdminId[i] = String.valueOf(id);
+			aFName[i] = pickFromArray(firstNameArray);
+			aMiddle[i] = pickFromArray(firstNameArray);
+			aLName[i] = pickFromArray(lastNameArray);
+			String result="";
+			for (int k = 0; k < len; k++) {
+				int index = (int) (random.nextFloat() * user.length());
+				result+=user.charAt(index);
+			}
+			aUsername[i] = result;
+			len=10;
+			result="";
+			for (int m = 0; m < len; m++) {
+				int index = (int) (random.nextFloat() * pword.length());
+				result+=pword.charAt(index);
+			}
+			aPassword[i] = result;
+		}
+		for (int j = 0; j < AdminId.length; j++) {
+			insertIntoAdmin(AdminId[j], aFName[j], aMiddle[j], aLName[j], aUsername[j], aPassword[j]);
+		}
+	}
       
     /**
      * Allows single records to be inserted into the COURSE table
