@@ -636,7 +636,7 @@ public class Main {
         String dbAddress = "jdbc:mysql://localhost:3306/";
         String dbName = "DBMS";
         String userName = "root";
-        String password = "Y4!t2669989";
+        String password = "root";
         Connection con = null; // represents connection to specific database
         // Load the JdbcOdbc Driver
         try {
