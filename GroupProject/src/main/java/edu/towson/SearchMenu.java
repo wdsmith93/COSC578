@@ -36,19 +36,54 @@ public class SearchMenu extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        sm_mainMenu = new javax.swing.JButton();
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Search Menu");
+
+        sm_mainMenu.setForeground(new java.awt.Color(206, 17, 38));
+        sm_mainMenu.setText("Main Menu");
+        sm_mainMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RtnToMainMenuBtn(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(157, 157, 157)
+                .addComponent(jLabel1)
+                .addContainerGap(164, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(sm_mainMenu)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 243, Short.MAX_VALUE)
+                .addComponent(sm_mainMenu)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void RtnToMainMenuBtn(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RtnToMainMenuBtn
+        String cmd = evt.getActionCommand();
+            if ("Main Menu".equals(cmd)) {
+                model.returnToMainMenu();
+            }
+    }//GEN-LAST:event_RtnToMainMenuBtn
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton sm_mainMenu;
     // End of variables declaration//GEN-END:variables
 }

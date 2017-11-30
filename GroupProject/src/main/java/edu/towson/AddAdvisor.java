@@ -36,19 +36,64 @@ public class AddAdvisor extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        adad_addAdvisorBtn = new javax.swing.JButton();
+        adad_mainMenuBtn = new javax.swing.JButton();
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Add an Advisor");
+
+        adad_addAdvisorBtn.setForeground(new java.awt.Color(206, 17, 38));
+        adad_addAdvisorBtn.setText("Add Advisor");
+        adad_addAdvisorBtn.setToolTipText("");
+
+        adad_mainMenuBtn.setForeground(new java.awt.Color(206, 17, 38));
+        adad_mainMenuBtn.setText("Main Menu");
+        adad_mainMenuBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adad_mainMenuBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(159, 159, 159)
+                .addComponent(jLabel1)
+                .addContainerGap(145, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(adad_mainMenuBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(adad_addAdvisorBtn)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 243, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(adad_addAdvisorBtn)
+                    .addComponent(adad_mainMenuBtn))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void adad_mainMenuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adad_mainMenuBtnActionPerformed
+        String cmd = evt.getActionCommand();
+            if ("Main Menu".equals(cmd)) {
+                model.returnToMainMenu();
+            }
+    }//GEN-LAST:event_adad_mainMenuBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton adad_addAdvisorBtn;
+    private javax.swing.JButton adad_mainMenuBtn;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
