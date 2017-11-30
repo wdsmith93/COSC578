@@ -39,12 +39,12 @@ public class Main implements Runnable {
         readFromFile(STATES_INPUT, statesArray);
 
         //TODO: Uncomment the following lines!!
-        //createTables();
+        createTables();
         //After creating the tables, the following methods will generate fake data for the individual tables
-        //initDepartment();
-        //initInstructor();
-        //initClassroom();
-        //initCourse();
+        initDepartment();
+        initInstructor();
+        initClassroom();
+        initCourse();
         
         EventQueue.invokeLater(new Main());
         
