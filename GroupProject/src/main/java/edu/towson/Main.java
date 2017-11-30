@@ -1,5 +1,6 @@
 package edu.towson;
 
+import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,8 +8,9 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.sql.*;
 import java.util.GregorianCalendar;
 import java.util.Random;
+import javax.swing.JFrame;
 
-public class Main {
+public class Main implements Runnable {
 
     private static final String FIRST_NAME_INPUT = "firstnames.txt";
     private static final String LAST_NAME_INPUT = "lastnames.txt";
@@ -47,7 +49,19 @@ public class Main {
         initStudentPhNo();
         initPreReq();
         
+        EventQueue.invokeLater(new Main());
+        
     }
+    
+    @Override
+        public void run() {
+            JFrame frame = new JFrame("BCCC Database");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.add(new DatabaseView());
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        }
     
     /**
      * Allows single records to be inserted into the PREREQUISITE table
