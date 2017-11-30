@@ -26,6 +26,10 @@ public class Main implements Runnable {
     private static String[] statesArray = new String[10];
     private static Random rand = new Random(System.currentTimeMillis());
 
+    
+   
+    
+    
     public static void main(String[] args) {
         //Generated random data lists via this website: https://www.randomlists.com/random-names
         readFromFile(FIRST_NAME_INPUT, firstNameArray);
@@ -35,6 +39,7 @@ public class Main implements Runnable {
         readFromFile(ZIP_CODE_INPUT, zipCodeArray);
         readFromFile(STATES_INPUT, statesArray);
 
+        //TODO: Uncomment the following lines!!
         createTables();
         //After creating the tables, the following methods will generate fake data for the individual tables
         initDepartment();
@@ -52,6 +57,7 @@ public class Main implements Runnable {
         EventQueue.invokeLater(new Main());
         
     }
+
     
     @Override
         public void run() {
@@ -325,8 +331,8 @@ public class Main implements Runnable {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-
-	}    
+        
+          
     
     /**
 	 * Internal method to populate the IDCARD table with random data
