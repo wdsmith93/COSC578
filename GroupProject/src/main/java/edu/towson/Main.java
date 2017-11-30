@@ -651,7 +651,7 @@ public class Main implements Runnable {
      * Method that returns a database connection
      * @return connection 
      */
-    private static Connection connect(){
+    public static Connection connect(){
         String jdbcDriver = "com.mysql.jdbc.Driver";
         String dbAddress = "jdbc:mysql://localhost:3306/";
         String dbName = "DBMS";
