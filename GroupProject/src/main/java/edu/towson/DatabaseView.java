@@ -211,6 +211,12 @@ class Model extends Observable {
         setChanged();
         notifyObservers(cSelection);
     }
+    
+    public void goToSearchMenu() {
+        cSelection = CardSelection.SEARCH_MENU;
+        setChanged();
+        notifyObservers(cSelection);
+    }
 
 }
 /**

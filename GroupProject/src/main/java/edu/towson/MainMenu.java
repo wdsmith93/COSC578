@@ -55,6 +55,11 @@ public class MainMenu extends javax.swing.JPanel {
 
         searchMMButton.setForeground(new java.awt.Color(206, 17, 38));
         searchMMButton.setText("Search Records");
+        searchMMButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchMMButtonActionPerformed(evt);
+            }
+        });
 
         mm_addCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         mm_addCombo.addActionListener(new java.awt.event.ActionListener() {
@@ -122,7 +127,6 @@ public class MainMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_populateDbButtonActionPerformed
 
     private void MainMenuAddItemSelected(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MainMenuAddItemSelected
-        // TODO add your handling code here:
         int selection = mm_addCombo.getSelectedIndex();
         switch(selection){
             case 1:
@@ -143,6 +147,13 @@ public class MainMenu extends javax.swing.JPanel {
         }
         
     }//GEN-LAST:event_MainMenuAddItemSelected
+
+    private void searchMMButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchMMButtonActionPerformed
+        String cmd = evt.getActionCommand();
+            if ("Search Records".equals(cmd)) {
+                model.goToSearchMenu();
+            }
+    }//GEN-LAST:event_searchMMButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
