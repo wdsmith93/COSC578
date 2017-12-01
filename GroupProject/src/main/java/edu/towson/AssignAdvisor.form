@@ -112,11 +112,17 @@
       <Properties>
         <Property name="toolTipText" type="java.lang.String" value="Enter student id#"/>
       </Properties>
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="addAdvisor_studentIDFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="addAdvisor_advisorId">
       <Properties>
         <Property name="toolTipText" type="java.lang.String" value="Enter advisor id#"/>
       </Properties>
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="addAdvisor_advisorIdFocusLost"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
