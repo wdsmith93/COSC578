@@ -114,6 +114,11 @@ public class AddStudent extends javax.swing.JPanel {
 
         as_addStudentBtn.setForeground(new java.awt.Color(206, 17, 38));
         as_addStudentBtn.setText("Add Student");
+        as_addStudentBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                as_addStudentBtnActionPerformed(evt);
+            }
+        });
 
         as_mainMenu.setForeground(new java.awt.Color(206, 17, 38));
         as_mainMenu.setText("Main Menu");
@@ -233,9 +238,7 @@ public class AddStudent extends javax.swing.JPanel {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel12)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(as_advisorIdNum, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
+                                    .addComponent(as_advisorIdNum, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -318,6 +321,10 @@ public class AddStudent extends javax.swing.JPanel {
     private void as_lastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_as_lastNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_as_lastNameActionPerformed
+
+    private void as_addStudentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_as_addStudentBtnActionPerformed
+        // TODO Navya could you add logic here to perform the write of the form info to the database?
+    }//GEN-LAST:event_as_addStudentBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

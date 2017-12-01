@@ -176,6 +176,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Add Data"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="aa_addDataBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="aa_mainMenuBtn">
       <Properties>
