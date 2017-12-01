@@ -17,28 +17,28 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                          <Component id="assignAdvMMBtn" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="mainMenuBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="assignAdvAssignBtn" min="-2" max="-2" attributes="0"/>
+                      <Component id="assignBtn" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="addAdvisor_studentID" alignment="0" min="-2" pref="122" max="-2" attributes="0"/>
+                          <Component id="assignInst_enterInstId" alignment="0" min="-2" pref="141" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          <Component id="addAdvisor_advisorId" min="-2" pref="124" max="-2" attributes="0"/>
+                          <Component id="assignInst_enterCourseNum" min="-2" pref="143" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="58" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -50,20 +50,20 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="addAdvisor_studentID" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="addAdvisor_advisorId" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="assignInst_enterInstId" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="assignInst_enterCourseNum" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="184" max="32767" attributes="0"/>
+              <EmptySpace pref="182" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="assignAdvAssignBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="assignAdvMMBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="assignBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="mainMenuBtn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -71,51 +71,52 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="assignAdvAssignBtn">
+    <Component class="javax.swing.JButton" name="assignBtn">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="26" green="11" red="ce" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Assign"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AssignBtnHandler"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="assignBtnActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="assignAdvMMBtn">
+    <Component class="javax.swing.JButton" name="mainMenuBtn">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="26" green="11" red="ce" type="rgb"/>
+          <Color blue="26" green="d" red="ce" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Main Menu"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MainMenuBtnHandler"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mainMenuBtnActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Assign an Advisor to a Student"/>
+        <Property name="text" type="java.lang.String" value="Assign Instructor to a Course"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Enter student ID#"/>
+        <Property name="text" type="java.lang.String" value="Enter instructor id#"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Enter advisor ID#"/>
+        <Property name="text" type="java.lang.String" value="Enter course#"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="addAdvisor_studentID">
+    <Component class="javax.swing.JTextField" name="assignInst_enterInstId">
       <Properties>
-        <Property name="toolTipText" type="java.lang.String" value="Enter student id#"/>
+        <Property name="toolTipText" type="java.lang.String" value="Enter instructor id#"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="addAdvisor_advisorId">
+    <Component class="javax.swing.JTextField" name="assignInst_enterCourseNum">
       <Properties>
-        <Property name="toolTipText" type="java.lang.String" value="Enter advisor id#"/>
+        <Property name="toolTipText" type="java.lang.String" value="Enter course number"/>
       </Properties>
     </Component>
   </SubComponents>

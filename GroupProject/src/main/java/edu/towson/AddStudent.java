@@ -49,7 +49,6 @@ public class AddStudent extends javax.swing.JPanel {
         as_dob = new javax.swing.JFormattedTextField();
         as_email = new javax.swing.JTextField();
         as_grantAuth = new javax.swing.JTextField();
-        as_advisorIdNum = new javax.swing.JTextField();
         as_addStudentBtn = new javax.swing.JButton();
         as_mainMenu = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -62,7 +61,6 @@ public class AddStudent extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         as_addSSNFormatted = new javax.swing.JFormattedTextField();
 
@@ -70,25 +68,10 @@ public class AddStudent extends javax.swing.JPanel {
         jLabel1.setText("Add a Student");
 
         as_firstName.setToolTipText("Enter first name");
-        as_firstName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                as_firstNameActionPerformed(evt);
-            }
-        });
 
         as_middleName.setToolTipText("Enter middle name");
-        as_middleName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                as_middleNameActionPerformed(evt);
-            }
-        });
 
         as_lastName.setToolTipText("Enter last name");
-        as_lastName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                as_lastNameActionPerformed(evt);
-            }
-        });
 
         as_sIdNum.setToolTipText("Enter student id#");
 
@@ -109,8 +92,6 @@ public class AddStudent extends javax.swing.JPanel {
         as_email.setToolTipText("Enter student's email address");
 
         as_grantAuth.setToolTipText("Enter grant auth# if applicable");
-
-        as_advisorIdNum.setToolTipText("Enter advisor's id#");
 
         as_addStudentBtn.setForeground(new java.awt.Color(206, 17, 38));
         as_addStudentBtn.setText("Add Student");
@@ -147,8 +128,6 @@ public class AddStudent extends javax.swing.JPanel {
         jLabel10.setText("Enter email address");
 
         jLabel11.setText("Grant auth#");
-
-        jLabel12.setText("Enter advisor id#");
 
         jLabel13.setText("Select gender");
 
@@ -227,18 +206,12 @@ public class AddStudent extends javax.swing.JPanel {
                                         .addComponent(jLabel7))
                                     .addComponent(as_lastName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(as_grantAuth, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel12)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(as_advisorIdNum, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(jLabel10)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(as_grantAuth, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel11)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -283,13 +256,9 @@ public class AddStudent extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(as_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12))
+                .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(as_grantAuth, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(as_advisorIdNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(as_grantAuth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -303,24 +272,12 @@ public class AddStudent extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void as_firstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_as_firstNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_as_firstNameActionPerformed
-
     private void RtnToMainMenuBtn(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RtnToMainMenuBtn
         String cmd = evt.getActionCommand();
             if ("Main Menu".equals(cmd)) {
                 model.returnToMainMenu();
             }
     }//GEN-LAST:event_RtnToMainMenuBtn
-
-    private void as_middleNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_as_middleNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_as_middleNameActionPerformed
-
-    private void as_lastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_as_lastNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_as_lastNameActionPerformed
 
     private void as_addStudentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_as_addStudentBtnActionPerformed
         // TODO Navya could you add logic here to perform the write of the form info to the database?
@@ -330,7 +287,6 @@ public class AddStudent extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField as_addSSNFormatted;
     private javax.swing.JButton as_addStudentBtn;
-    private javax.swing.JTextField as_advisorIdNum;
     private javax.swing.JTextField as_currentAddress;
     private javax.swing.JFormattedTextField as_dob;
     private javax.swing.JTextField as_email;
@@ -350,7 +306,6 @@ public class AddStudent extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

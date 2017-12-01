@@ -28,6 +28,8 @@ public class DatabaseView extends JPanel {
         AddInstructor addInstructor = new AddInstructor(model);
         SearchMenu searchMenu = new SearchMenu(model);
         AssignAdvisor assignAdvisor = new AssignAdvisor(model);
+        AssignInstructor assignInstructor = new AssignInstructor(model);
+        QueryResult queryResult = new QueryResult(model);
         Control control2 = new Control(model, mainMenu);
         Control control3 = new Control(model, addStudent);
         Control control4 = new Control(model, addCourse);
@@ -36,6 +38,8 @@ public class DatabaseView extends JPanel {
         Control control7 = new Control(model, addAdmin);
         Control control8 = new Control(model, searchMenu);
         Control control9 = new Control(model, assignAdvisor);
+        Control control1 = new Control(model, assignInstructor);
+        Control control10 = new Control(model, queryResult);
       
         panelSet = this;
         panelSet.setLayout(layout);
@@ -49,6 +53,9 @@ public class DatabaseView extends JPanel {
         panelSet.add(addInstructor, "add_instructor");
         panelSet.add(searchMenu, "search_menu");
         panelSet.add(assignAdvisor, "assign_advisor");
+        panelSet.add(assignInstructor, "assign_instructor");
+        panelSet.add(queryResult, "query_result");
+        panelSet.add(control1);
         panelSet.add(control2);
         panelSet.add(control3);
         panelSet.add(control4);
@@ -57,6 +64,7 @@ public class DatabaseView extends JPanel {
         panelSet.add(control7);
         panelSet.add(control8);
         panelSet.add(control9);
+        panelSet.add(control10);
     }
     
 /**
@@ -74,58 +82,62 @@ class Control extends JPanel {
     private AddAdmin addAdmin;
     private SearchMenu searchMenu;
     private AssignAdvisor assignAdvisor;
+    private AssignInstructor assignInstructor;
+    private QueryResult queryResult;
 
     public Control(Model model, View view) {
         this.model = model;
         this.view = view;
     }
     
-    //TODO: Will need to add combo box to select from other add information forms
     public Control(Model model, SearchMenu sm) {
         this.model = model;
         this.searchMenu = sm;
     }
     
-    //TODO: Will need to add combo box to select from other add information forms
     public Control(Model model, AddAdmin aa) {
         this.model = model;
         this.addAdmin = aa;
     }
     
-    //TODO: Will need to add combo box to select from other add information forms
     public Control(Model model, AddInstructor ai) {
         this.model = model;
         this.addInstructor = ai;
     }
     
-    //TODO: Will need to add combo box to select from other add information forms
     public Control(Model model, AddDepartment ad) {
         this.model = model;
         this.addDepartment = ad;
     }
     
-    //TODO: Will need to add combo box to select from other add information forms
     public Control(Model model, MainMenu mm) {
         this.model = model;
         this.mainMenu = mm;
     }
     
-    //TODO: Will need to add combo box to select from other add information forms
     public Control(Model model, AddStudent as) {
         this.model = model;
         this.addStudent = as;
     }
     
-    //TODO: Will need to add combo box to select from other add information forms
     public Control(Model model, AddCourse ac) {
         this.model = model;
         this.addCourse = ac;
     }
     
-    //TODO: Will need to add combo box to select from other add information forms
     public Control(Model model, AssignAdvisor aa) {
         this.model = model;
         this.assignAdvisor = aa;
+    }
+    
+    public Control(Model model, AssignInstructor ai) {
+        this.model = model;
+        this.assignInstructor = ai;
+    }
+    
+    public Control(Model model, QueryResult qr) {
+        this.model = model;
+        this.queryResult = qr;
     }
 
     
@@ -174,6 +186,12 @@ class View extends JPanel {
             if (arg == CardSelection.ASSIGN_ADVISOR) {
                 layout.show(panelSet, "assign_advisor");
             } 
+            if (arg == CardSelection.ASSIGN_INSTRUCTOR) {
+                layout.show(panelSet, "assign_instructor");
+            }
+            if (arg == CardSelection.QUERY_RESULT) {
+                layout.show(panelSet, "query_result");
+            }
         }
     }
 }
@@ -237,12 +255,25 @@ class Model extends Observable {
         setChanged();
         notifyObservers(cSelection);
     }
+    
+    public void goToAssignInstructor() {
+        cSelection = CardSelection.ASSIGN_INSTRUCTOR;
+        setChanged();
+        notifyObservers(cSelection);
+    }
+    
+    public void goToQueryResult() {
+        cSelection = CardSelection.QUERY_RESULT;
+        setChanged();
+        notifyObservers(cSelection);
+    }
 
 }
 /**
  * Enum representing the different card views
  */
 public enum CardSelection {
-    MAIN_MENU, ADD_STUDENT, ADD_COURSE, ADD_DEPT, ADD_INSTRUCTOR, ADD_ADMIN, SEARCH_MENU, ASSIGN_ADVISOR;
+    MAIN_MENU, ADD_STUDENT, ADD_COURSE, ADD_DEPT, ADD_INSTRUCTOR, ADD_ADMIN, SEARCH_MENU, ASSIGN_ADVISOR,
+       ASSIGN_INSTRUCTOR, QUERY_RESULT;
     }
 }
