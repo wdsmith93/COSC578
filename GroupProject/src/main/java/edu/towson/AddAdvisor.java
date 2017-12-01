@@ -46,6 +46,11 @@ public class AddAdvisor extends javax.swing.JPanel {
         adad_addAdvisorBtn.setForeground(new java.awt.Color(206, 17, 38));
         adad_addAdvisorBtn.setText("Add Advisor");
         adad_addAdvisorBtn.setToolTipText("");
+        adad_addAdvisorBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adad_addAdvisorBtnActionPerformed(evt);
+            }
+        });
 
         adad_mainMenuBtn.setForeground(new java.awt.Color(206, 17, 38));
         adad_mainMenuBtn.setText("Main Menu");
@@ -89,6 +94,10 @@ public class AddAdvisor extends javax.swing.JPanel {
                 model.returnToMainMenu();
             }
     }//GEN-LAST:event_adad_mainMenuBtnActionPerformed
+
+    private void adad_addAdvisorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adad_addAdvisorBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_adad_addAdvisorBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
