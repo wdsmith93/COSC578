@@ -25,14 +25,14 @@ public class DatabaseView extends JPanel {
         AddCourse addCourse = new AddCourse(model);
         AddDepartment addDepartment = new AddDepartment(model);
         AddAdmin addAdmin = new AddAdmin(model);
-        AddAdvisor addAdvisor = new AddAdvisor(model);
+        AddInstructor addInstructor = new AddInstructor(model);
         SearchMenu searchMenu = new SearchMenu(model);
         AssignAdvisor assignAdvisor = new AssignAdvisor(model);
         Control control2 = new Control(model, mainMenu);
         Control control3 = new Control(model, addStudent);
         Control control4 = new Control(model, addCourse);
         Control control5 = new Control(model, addDepartment);
-        Control control6 = new Control(model, addAdvisor);
+        Control control6 = new Control(model, addInstructor);
         Control control7 = new Control(model, addAdmin);
         Control control8 = new Control(model, searchMenu);
         Control control9 = new Control(model, assignAdvisor);
@@ -46,7 +46,7 @@ public class DatabaseView extends JPanel {
         panelSet.add(addCourse, "add_course");
         panelSet.add(addDepartment, "add_dept");
         panelSet.add(addAdmin, "add_admin");
-        panelSet.add(addAdvisor, "add_advisor");
+        panelSet.add(addInstructor, "add_instructor");
         panelSet.add(searchMenu, "search_menu");
         panelSet.add(assignAdvisor, "assign_advisor");
         panelSet.add(control2);
@@ -70,7 +70,7 @@ class Control extends JPanel {
     private AddStudent addStudent;
     private AddCourse addCourse;
     private AddDepartment addDepartment;
-    private AddAdvisor addAdvisor;
+    private AddInstructor addInstructor;
     private AddAdmin addAdmin;
     private SearchMenu searchMenu;
     private AssignAdvisor assignAdvisor;
@@ -93,9 +93,9 @@ class Control extends JPanel {
     }
     
     //TODO: Will need to add combo box to select from other add information forms
-    public Control(Model model, AddAdvisor aa) {
+    public Control(Model model, AddInstructor ai) {
         this.model = model;
-        this.addAdvisor = aa;
+        this.addInstructor = ai;
     }
     
     //TODO: Will need to add combo box to select from other add information forms
@@ -162,8 +162,8 @@ class View extends JPanel {
             if (arg == CardSelection.ADD_DEPT) {
                 layout.show(panelSet, "add_dept");
             } 
-            if (arg == CardSelection.ADD_ADVISOR) {
-                layout.show(panelSet, "add_advisor");
+            if (arg == CardSelection.ADD_INSTRUCTOR) {
+                layout.show(panelSet, "add_instructor");
             } 
             if (arg == CardSelection.ADD_ADMIN) {
                 layout.show(panelSet, "add_admin");
@@ -221,7 +221,7 @@ class Model extends Observable {
     }
     
     public void goToAddAdvisor() {
-        cSelection = CardSelection.ADD_ADVISOR;
+        cSelection = CardSelection.ADD_INSTRUCTOR;
         setChanged();
         notifyObservers(cSelection);
     }
@@ -243,6 +243,6 @@ class Model extends Observable {
  * Enum representing the different card views
  */
 public enum CardSelection {
-    MAIN_MENU, ADD_STUDENT, ADD_COURSE, ADD_DEPT, ADD_ADVISOR, ADD_ADMIN, SEARCH_MENU, ASSIGN_ADVISOR;
+    MAIN_MENU, ADD_STUDENT, ADD_COURSE, ADD_DEPT, ADD_INSTRUCTOR, ADD_ADMIN, SEARCH_MENU, ASSIGN_ADVISOR;
     }
 }
