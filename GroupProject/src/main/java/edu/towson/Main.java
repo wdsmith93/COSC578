@@ -41,18 +41,6 @@ public class Main implements Runnable {
 
         //TODO: Uncomment the following lines!!
         createTables();
-        //After creating the tables, the following methods will generate fake data for the individual tables
-        initDepartment();
-        initInstructor();
-        initClassroom();
-        initCourse();
-        initAdmin();
-        initIdcard();
-        initStudent();
-        initClassCourse();
-        initEnrolls();
-        initStudentPhNo();
-        initPreReq();
         
         EventQueue.invokeLater(new Main());
         
@@ -68,7 +56,24 @@ public class Main implements Runnable {
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
         }
+    /**
+     * After creating the tables, the following method will generate fake data for the individual tables
+     */
     
+	private static void populateDB() {
+
+		initDepartment();
+		initInstructor();
+		initClassroom();
+		initCourse();
+		initAdmin();
+		initIdcard();
+		initStudent();
+		initClassCourse();
+		initEnrolls();
+		initStudentPhNo();
+		initPreReq();
+	}
     /**
      * Allows single records to be inserted into the PREREQUISITE table
      * @param courseId  course id 
@@ -460,7 +465,7 @@ public class Main implements Runnable {
      * @param iId  instructor id
      */
     private static void insertIntoCourse(String id, String title, String description, String bDate, String eDate, int iId){
-        String sql = "INSERT INTO Course(Course_Id, Course_Title, Course_Desc, Begin_date, End_date, Instructor_Id) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO COURSE(Course_Id, Course_Title, Course_Desc, Begin_date, End_date, Instructor_Id) VALUES(?,?,?,?,?,?)";
         
         try (Connection conn = Main.connect();
                 PreparedStatement pstmt = conn.prepareStatement(sql)){
@@ -651,7 +656,7 @@ public class Main implements Runnable {
      * Method that returns a database connection
      * @return connection 
      */
-    private static Connection connect(){
+    public static Connection connect(){
         String jdbcDriver = "com.mysql.jdbc.Driver";
         String dbAddress = "jdbc:mysql://localhost:3306/";
         String dbName = "DBMS";

@@ -1,6 +1,7 @@
 package edu.towson;
 
 import java.awt.BorderLayout;
+import java.sql.*;
 import java.util.LinkedList;
 import javax.swing.SpinnerModel;
 
@@ -28,13 +29,23 @@ public class AddCourse extends javax.swing.JPanel {
         //Using a linked list here so it can grow dynamically - array could have empty spaces that might show up in combo box
         LinkedList<String> list = new LinkedList();
         //TODO: IMPORTANT!! Need to get this dynamically from the database (query result?) and remove these adds when done
-        list.add("Computer Science");
+        String sql = "SELECT DISTINCT Dept_Name From DEPARTMENT";
+        try (Connection conn = Main.connect();
+            Statement stmt = conn.createStatement()){
+        	ResultSet rs = stmt.executeQuery(sql);
+        	while (rs.next()) {
+        		list.add(rs.getString("Dept_Name"));
+        	}
+        } catch (SQLException e) {
+
+        }
+ /*       list.add("Computer Science");
         list.add("Mathematics");
         list.add("English Composition");
         list.add("Biological and Physical Sciences");
         list.add("Social and Behavioral Sciences");
         list.add("Arts and Humanities");
-        list.add("Interdisciplinary and Emerging Issues");
+        list.add("Interdisciplinary and Emerging Issues");*/
         
         String[] fromLinkedList = list.toArray(new String[list.size()]);
         
