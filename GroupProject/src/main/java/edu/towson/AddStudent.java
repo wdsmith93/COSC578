@@ -86,11 +86,11 @@ public class AddStudent extends javax.swing.JPanel {
         as_currentAddress.setToolTipText("Enter student's current address");
 
         buttonGroup1.add(as_male);
-        as_male.setText("Male");
+        as_male.setText("M");
         as_male.setToolTipText("");
 
         buttonGroup1.add(as_female);
-        as_female.setText("Female");
+        as_female.setText("F");
 
         as_dob.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
         as_dob.setToolTipText("Format YYYY-MM-DD");
@@ -180,7 +180,7 @@ public class AddStudent extends javax.swing.JPanel {
                                         .addGap(187, 187, 187))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(as_male)
-                                        .addGap(12, 228, Short.MAX_VALUE))
+                                        .addGap(12, 246, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
                                         .addComponent(as_sIdNum, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -214,9 +214,8 @@ public class AddStudent extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel10)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(as_grantAuth, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel11)))
+                                    .addComponent(as_grantAuth, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel11))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
