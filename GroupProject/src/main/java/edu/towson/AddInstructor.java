@@ -7,10 +7,13 @@ package edu.towson;
 
 import java.awt.BorderLayout;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
+
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -200,8 +203,70 @@ public class AddInstructor extends javax.swing.JPanel {
 
     private void adad_addInstructorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adad_addInstructorBtnActionPerformed
         // TODO Navya this is the button where we'll write the form contents to the database
+    	boolean sIdIsValid = checkInstructorId();
+    	boolean showErrorMsg = false;
+        String errorMessage = "";  
+        int dep_num=0;
+        String deptsql = "SELECT Dept_Num From DEPARTMENT WHERE Dept_Name = ?";
+        try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(deptsql)) {
+			stmt.setString(1, String.valueOf(addInst_addDeptNumCB.getSelectedItem()));
+			ResultSet rs = stmt.executeQuery();
+        	if (rs.next()) {
+        	 dep_num=rs.getInt("Dept_Num");
+        	}
+        } catch (SQLException e) {
+        }
+        String sql = "INSERT INTO INSTRUCTOR(Instructor_Id, First, Middle, Last, Dept_Num) VALUES(?,?,?,?,?)";
+        if(sIdIsValid==true){
+            try (Connection conn = Main.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setString(1, addInst_instIdNum.getText());
+                pstmt.setString(2, addInst_fname.getText());
+                pstmt.setString(3, addInst_mname.getText());
+                pstmt.setString(4, addInst_lname.getText());
+                pstmt.setInt(5, dep_num);
+                pstmt.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Successfully added instructor");
+                addInst_instIdNum.setText("");
+                addInst_fname.setText("");
+                addInst_mname.setText("");
+                addInst_lname.setText("");
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+             
+        else {
+            if(sIdIsValid == false){
+                errorMessage = errorMessage + "instructor id already exist \n";
+                showErrorMsg = true;
+            }
+        }
+        if(showErrorMsg == true){
+            JOptionPane.showMessageDialog(null, errorMessage);
+        }
     }//GEN-LAST:event_adad_addInstructorBtnActionPerformed
 
+    private boolean checkInstructorId() {
+		boolean result = false;
+
+		String sql = "SELECT * From INSTRUCTOR WHERE Instructor_Id = ?";
+		try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, addInst_instIdNum.getText());
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				result = false;
+			} else {
+				result = true;
+			}
+
+		} catch (SQLException e) {
+
+		}
+		return result;
+
+	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton adad_addInstrctrBtn;

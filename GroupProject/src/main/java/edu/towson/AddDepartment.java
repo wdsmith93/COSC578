@@ -6,6 +6,12 @@
 package edu.towson;
 
 import java.awt.BorderLayout;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -167,8 +173,59 @@ public class AddDepartment extends javax.swing.JPanel {
 
     private void ad_AddDeptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ad_AddDeptBtnActionPerformed
         // TODO Navya could you add logic here to perform the write of the form info to the database?
+    	boolean sIdIsValid = checkDeptId();
+    	boolean showErrorMsg = false;
+        String errorMessage = "";
+        String sql = "INSERT INTO DEPARTMENT(Dept_Name, Dept_Num, Office_No, Office_Ph_No) VALUES(?,?,?,?)";
+        if(sIdIsValid==true){
+            try (Connection conn = Main.connect();
+                    PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setString(1, ad_deptName.getText());
+                pstmt.setInt(2, Integer.parseInt(ad_deptCode.getText()));
+                pstmt.setInt(3, Integer.parseInt(ad_deptOfficeNum.getText()));
+                pstmt.setString(4, ad_addPhNumFormatted.getText());
+                pstmt.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Successfully added department");
+                ad_deptName.setText("");
+                ad_deptCode.setText("");
+                ad_deptOfficeNum.setText("");
+                ad_addPhNumFormatted.setText("");
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+             
+        else {
+            if(sIdIsValid == false){
+                errorMessage = errorMessage + "department code already exist \n";
+                showErrorMsg = true;
+            }
+        }
+        if(showErrorMsg == true){
+            JOptionPane.showMessageDialog(null, errorMessage);
+        }
     }//GEN-LAST:event_ad_AddDeptBtnActionPerformed
+    
+	private boolean checkDeptId() {
+		boolean result = false;
 
+		String sql = "SELECT * From DEPARTMENT WHERE Dept_Num = ?";
+		try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, ad_deptCode.getText());
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				result = false;
+			} else {
+				result = true;
+			}
+
+		} catch (SQLException e) {
+
+		}
+		return result;
+
+	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ad_AddDeptBtn;
