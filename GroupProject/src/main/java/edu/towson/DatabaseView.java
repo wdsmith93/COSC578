@@ -27,6 +27,7 @@ public class DatabaseView extends JPanel {
         AddAdmin addAdmin = new AddAdmin(model);
         AddAdvisor addAdvisor = new AddAdvisor(model);
         SearchMenu searchMenu = new SearchMenu(model);
+        AssignAdvisor assignAdvisor = new AssignAdvisor(model);
         Control control2 = new Control(model, mainMenu);
         Control control3 = new Control(model, addStudent);
         Control control4 = new Control(model, addCourse);
@@ -34,6 +35,7 @@ public class DatabaseView extends JPanel {
         Control control6 = new Control(model, addAdvisor);
         Control control7 = new Control(model, addAdmin);
         Control control8 = new Control(model, searchMenu);
+        Control control9 = new Control(model, assignAdvisor);
       
         panelSet = this;
         panelSet.setLayout(layout);
@@ -46,6 +48,7 @@ public class DatabaseView extends JPanel {
         panelSet.add(addAdmin, "add_admin");
         panelSet.add(addAdvisor, "add_advisor");
         panelSet.add(searchMenu, "search_menu");
+        panelSet.add(assignAdvisor, "assign_advisor");
         panelSet.add(control2);
         panelSet.add(control3);
         panelSet.add(control4);
@@ -53,6 +56,7 @@ public class DatabaseView extends JPanel {
         panelSet.add(control6);
         panelSet.add(control7);
         panelSet.add(control8);
+        panelSet.add(control9);
     }
     
 /**
@@ -69,6 +73,7 @@ class Control extends JPanel {
     private AddAdvisor addAdvisor;
     private AddAdmin addAdmin;
     private SearchMenu searchMenu;
+    private AssignAdvisor assignAdvisor;
 
     public Control(Model model, View view) {
         this.model = model;
@@ -116,6 +121,12 @@ class Control extends JPanel {
         this.model = model;
         this.addCourse = ac;
     }
+    
+    //TODO: Will need to add combo box to select from other add information forms
+    public Control(Model model, AssignAdvisor aa) {
+        this.model = model;
+        this.assignAdvisor = aa;
+    }
 
     
 }
@@ -160,6 +171,9 @@ class View extends JPanel {
             if (arg == CardSelection.SEARCH_MENU) {
                 layout.show(panelSet, "search_menu");
             } 
+            if (arg == CardSelection.ASSIGN_ADVISOR) {
+                layout.show(panelSet, "assign_advisor");
+            } 
         }
     }
 }
@@ -174,6 +188,12 @@ class Model extends Observable {
 //TODO: This is ugly. Make it better
     private CardSelection init() {
         return pages[0];  //0 equates to the main menu
+    }
+    
+    public void goToAssignAdvisor() {
+        cSelection = CardSelection.ASSIGN_ADVISOR;
+        setChanged();
+        notifyObservers(cSelection);
     }
  
     public void returnToMainMenu() {
@@ -223,6 +243,6 @@ class Model extends Observable {
  * Enum representing the different card views
  */
 public enum CardSelection {
-    MAIN_MENU, ADD_STUDENT, ADD_COURSE, ADD_DEPT, ADD_ADVISOR, ADD_ADMIN, SEARCH_MENU;
+    MAIN_MENU, ADD_STUDENT, ADD_COURSE, ADD_DEPT, ADD_ADVISOR, ADD_ADMIN, SEARCH_MENU, ASSIGN_ADVISOR;
     }
 }

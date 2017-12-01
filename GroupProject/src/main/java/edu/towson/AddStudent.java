@@ -41,7 +41,6 @@ public class AddStudent extends javax.swing.JPanel {
         as_firstName = new javax.swing.JTextField();
         as_middleName = new javax.swing.JTextField();
         as_lastName = new javax.swing.JTextField();
-        as_ssn = new javax.swing.JTextField();
         as_sIdNum = new javax.swing.JTextField();
         as_permAddress = new javax.swing.JTextField();
         as_currentAddress = new javax.swing.JTextField();
@@ -65,6 +64,7 @@ public class AddStudent extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        as_addSSNFormatted = new javax.swing.JFormattedTextField();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Add a Student");
@@ -89,8 +89,6 @@ public class AddStudent extends javax.swing.JPanel {
                 as_lastNameActionPerformed(evt);
             }
         });
-
-        as_ssn.setToolTipText("Enter SSN");
 
         as_sIdNum.setToolTipText("Enter student id#");
 
@@ -149,6 +147,13 @@ public class AddStudent extends javax.swing.JPanel {
 
         jLabel13.setText("Select gender");
 
+        try {
+            as_addSSNFormatted.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        as_addSSNFormatted.setToolTipText("Enter only digits of SSN");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -171,7 +176,7 @@ public class AddStudent extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(as_female)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(as_mainMenu)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(as_addStudentBtn))
@@ -180,16 +185,20 @@ public class AddStudent extends javax.swing.JPanel {
                             .addComponent(as_currentAddress)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(as_male)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(as_ssn)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(as_sIdNum, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(12, 12, 12)
+                                        .addComponent(as_addSSNFormatted)
+                                        .addGap(187, 187, 187))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(as_male)
+                                        .addGap(12, 228, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(as_sIdNum, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(12, 12, 12)))
                                 .addComponent(as_dob, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                                 .addComponent(jLabel3)
                                 .addGap(27, 27, 27)
                                 .addComponent(jLabel4)
@@ -226,7 +235,7 @@ public class AddStudent extends javax.swing.JPanel {
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(as_advisorIdNum, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)))))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -255,9 +264,9 @@ public class AddStudent extends javax.swing.JPanel {
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(as_ssn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(as_sIdNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(as_dob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(as_dob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(as_addSSNFormatted, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -312,6 +321,7 @@ public class AddStudent extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField as_addSSNFormatted;
     private javax.swing.JButton as_addStudentBtn;
     private javax.swing.JTextField as_advisorIdNum;
     private javax.swing.JTextField as_currentAddress;
@@ -326,7 +336,6 @@ public class AddStudent extends javax.swing.JPanel {
     private javax.swing.JTextField as_middleName;
     private javax.swing.JTextField as_permAddress;
     private javax.swing.JTextField as_sIdNum;
-    private javax.swing.JTextField as_ssn;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
