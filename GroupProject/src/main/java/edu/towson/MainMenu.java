@@ -21,7 +21,7 @@ public class MainMenu extends javax.swing.JPanel {
         this.model = model;
         initComponents();
         //TODO: Add new "adds" here to this list to show in combo box
-        String[] list = new String[]{" ", "Add a student", "Add a department", "Add an advisor", "Add admin data", 
+        String[] list = new String[]{" ", "Add a student", "Add a department", "Add an instructor", "Add admin data", 
             "Add a course"};
         mm_addCombo.setModel(new javax.swing.DefaultComboBoxModel<>(list));
         
@@ -144,7 +144,7 @@ public class MainMenu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void populateDbButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populateDbButtonActionPerformed
-        // TODO add your handling code here:
+        Main.populateDB();
     }//GEN-LAST:event_populateDbButtonActionPerformed
 
     private void MainMenuAddItemSelected(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MainMenuAddItemSelected

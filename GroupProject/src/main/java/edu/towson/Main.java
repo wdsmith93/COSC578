@@ -60,7 +60,7 @@ public class Main implements Runnable {
      * After creating the tables, the following method will generate fake data for the individual tables
      */
     
-	private static void populateDB() {
+	public static void populateDB() {
 
 		initDepartment();
 		initInstructor();
