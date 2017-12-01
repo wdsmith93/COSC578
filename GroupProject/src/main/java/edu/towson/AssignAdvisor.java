@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.towson;
 
 import java.awt.BorderLayout;
@@ -31,7 +26,6 @@ public class AssignAdvisor extends javax.swing.JPanel {
     public AssignAdvisor(DatabaseView.Model model) {
         super(new BorderLayout());
         this.model = model;
-        //model.addObserver(new DatabaseView.View.ModelObserver());
         
         initComponents();
     }
@@ -58,37 +52,7 @@ public class AssignAdvisor extends javax.swing.JPanel {
                 AssignBtnHandler(evt);
             }
         });
-   
-        
-        addAdvisor_studentID.addFocusListener(new FocusListener() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				
-			}
 
-			@Override
-			public void focusLost(FocusEvent e) {
-
-				CheckStudentId(e);
-				
-			}
-			
-        });
-        
-        addAdvisor_advisorId.addFocusListener(new FocusListener() {
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				CheckAdvisorId(e);
-			}
-        	
-        });
-            
         assignAdvMMBtn.setForeground(new java.awt.Color(206, 17, 38));
         assignAdvMMBtn.setText("Main Menu");
         assignAdvMMBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -104,8 +68,18 @@ public class AssignAdvisor extends javax.swing.JPanel {
         jLabel3.setText("Enter advisor ID#");
 
         addAdvisor_studentID.setToolTipText("Enter student id#");
+        addAdvisor_studentID.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                addAdvisor_studentIDFocusLost(evt);
+            }
+        });
 
         addAdvisor_advisorId.setToolTipText("Enter advisor id#");
+        addAdvisor_advisorId.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                addAdvisor_advisorIdFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -175,7 +149,15 @@ public class AssignAdvisor extends javax.swing.JPanel {
     	
     }//GEN-LAST:event_AssignBtnHandler
 
-	private void CheckStudentId(java.awt.event.FocusEvent evt) {
+    private void addAdvisor_studentIDFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_addAdvisor_studentIDFocusLost
+        checkStudentId(evt);
+    }//GEN-LAST:event_addAdvisor_studentIDFocusLost
+
+    private void addAdvisor_advisorIdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_addAdvisor_advisorIdFocusLost
+        checkAdvisorId(evt);
+    }//GEN-LAST:event_addAdvisor_advisorIdFocusLost
+
+	private void checkStudentId(java.awt.event.FocusEvent evt) {
 
 		String sql = "SELECT * From STUDENT WHERE Sid = ?";
 		try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -192,7 +174,7 @@ public class AssignAdvisor extends javax.swing.JPanel {
 
 	}
     
-    private void CheckAdvisorId(java.awt.event.FocusEvent evt){
+    private void checkAdvisorId(java.awt.event.FocusEvent evt){
 
     	String sql = "SELECT * From INSTRUCTOR WHERE Instructor_Id = ?";
 		try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
