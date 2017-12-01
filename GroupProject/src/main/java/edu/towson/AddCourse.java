@@ -82,6 +82,11 @@ public class AddCourse extends javax.swing.JPanel {
         ac_addCourse.setForeground(new java.awt.Color(206, 17, 38));
         ac_addCourse.setText("Add Course");
         ac_addCourse.setToolTipText("");
+        ac_addCourse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ac_addCourseActionPerformed(evt);
+            }
+        });
 
         ac_mainMenu.setForeground(new java.awt.Color(206, 17, 38));
         ac_mainMenu.setText("Main Menu");
@@ -213,6 +218,10 @@ public class AddCourse extends javax.swing.JPanel {
     private void AddCourseDeptSelected(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddCourseDeptSelected
         // TODO add your handling code here:  REALLY NEED TO DO THIS TO PASS SELECTION TO DB!
     }//GEN-LAST:event_AddCourseDeptSelected
+
+    private void ac_addCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ac_addCourseActionPerformed
+        // TODO Navya could you add logic here to perform the write of the form info to the database?
+    }//GEN-LAST:event_ac_addCourseActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

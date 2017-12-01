@@ -50,6 +50,11 @@ public class AddDepartment extends javax.swing.JPanel {
 
         ad_AddDeptBtn.setForeground(new java.awt.Color(206, 17, 38));
         ad_AddDeptBtn.setText("Add Dept");
+        ad_AddDeptBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ad_AddDeptBtnActionPerformed(evt);
+            }
+        });
 
         ad_mainMenuBtn.setForeground(new java.awt.Color(206, 17, 38));
         ad_mainMenuBtn.setText("Main Menu");
@@ -159,6 +164,10 @@ public class AddDepartment extends javax.swing.JPanel {
                 model.returnToMainMenu();
             }
     }//GEN-LAST:event_RtnToMainMenuBtn
+
+    private void ad_AddDeptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ad_AddDeptBtnActionPerformed
+        // TODO Navya could you add logic here to perform the write of the form info to the database?
+    }//GEN-LAST:event_ad_AddDeptBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

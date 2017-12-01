@@ -66,6 +66,11 @@ public class AddAdmin extends javax.swing.JPanel {
 
         aa_addDataBtn.setForeground(new java.awt.Color(206, 17, 38));
         aa_addDataBtn.setText("Add Data");
+        aa_addDataBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aa_addDataBtnActionPerformed(evt);
+            }
+        });
 
         aa_mainMenuBtn.setForeground(new java.awt.Color(206, 17, 38));
         aa_mainMenuBtn.setText("Main Menu");
@@ -263,6 +268,10 @@ public class AddAdmin extends javax.swing.JPanel {
     private void adad_providedIdNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adad_providedIdNumActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_adad_providedIdNumActionPerformed
+
+    private void aa_addDataBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aa_addDataBtnActionPerformed
+        // TODO Navya could you add logic here to perform the write of the form info to the database?
+    }//GEN-LAST:event_aa_addDataBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
