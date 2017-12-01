@@ -66,18 +66,8 @@ public class AssignAdvisor extends javax.swing.JPanel {
         jLabel3.setText("Enter advisor ID#");
 
         addAdvisor_studentID.setToolTipText("Enter student id#");
-        addAdvisor_studentID.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                addAdvisor_studentIDFocusLost(evt);
-            }
-        });
 
         addAdvisor_advisorId.setToolTipText("Enter advisor id#");
-        addAdvisor_advisorId.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                addAdvisor_advisorIdFocusLost(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -139,8 +129,6 @@ public class AssignAdvisor extends javax.swing.JPanel {
         String errorMessage = "";
         
         String sql = "UPDATE STUDENT SET Advisor_Id =?  WHERE Sid = ?";
-        //String checkStudentId = "SELECT * From STUDENT WHERE Sid = ?";
-        //String checkAdvisorId = "SELECT * From INSTRUCTOR WHERE Instructor_Id = ?";
         
         if (sIdIsValid == true && aIdIsValid == true){
 		try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -169,15 +157,6 @@ public class AssignAdvisor extends javax.swing.JPanel {
     	
     }//GEN-LAST:event_AssignBtnHandler
 
-    private void addAdvisor_studentIDFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_addAdvisor_studentIDFocusLost
-        //checkStudentId(evt);
-    }//GEN-LAST:event_addAdvisor_studentIDFocusLost
-
-    private void addAdvisor_advisorIdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_addAdvisor_advisorIdFocusLost
-        //checkAdvisorId(evt);
-    }//GEN-LAST:event_addAdvisor_advisorIdFocusLost
-
-	//private void checkStudentId(java.awt.event.FocusEvent evt) {
     private boolean checkStudentId() {
         boolean result = false;
 
@@ -187,7 +166,6 @@ public class AssignAdvisor extends javax.swing.JPanel {
 			ResultSet rs = stmt.executeQuery();
 
 			if (!rs.next()) {
-				//JOptionPane.showMessageDialog(null, "Enter Valid Student Id");
                                 result = false;
 			} else {
                             result = true;
@@ -200,7 +178,6 @@ public class AssignAdvisor extends javax.swing.JPanel {
 
 	}
     
-    //private void checkAdvisorId(java.awt.event.FocusEvent evt){
     private boolean checkAdvisorId(){
         boolean result = false;
 
@@ -210,7 +187,6 @@ public class AssignAdvisor extends javax.swing.JPanel {
 			ResultSet rs = stmt.executeQuery();
 
 			if (!rs.next()) {
-				//JOptionPane.showMessageDialog(null, "Enter Valid Advisor Id");
                                 result = false;
 			} else {
                             result = true;

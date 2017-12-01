@@ -20,13 +20,11 @@ public class MainMenu extends javax.swing.JPanel {
         super(new BorderLayout());
         this.model = model;
         initComponents();
-        //TODO: Add new "adds" here to this list to show in combo box
         String[] list = new String[]{" ", "Add a student", "Add a department", "Add an instructor", "Add admin data", 
             "Add a course"};
         mm_addCombo.setModel(new javax.swing.DefaultComboBoxModel<>(list));
         
-        //TODO: Add new "actions" here to this list to show in combo box
-        String[] actionList = new String[]{" ", "Assign advisor to student", "", "", "", 
+        String[] actionList = new String[]{" ", "Assign advisor to student", "Assign instructor to course", "", "", 
             ""};
         mm_selectActionComboBx.setModel(new javax.swing.DefaultComboBoxModel<>(actionList));
     }
@@ -183,7 +181,7 @@ public class MainMenu extends javax.swing.JPanel {
                 model.goToAssignAdvisor();
                 break;
             case 2:
-                //TODO
+                model.goToAssignInstructor();
                 break;
             case 3:
                 //TODO
