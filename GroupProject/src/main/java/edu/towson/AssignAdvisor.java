@@ -6,6 +6,12 @@
 package edu.towson;
 
 import java.awt.BorderLayout;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.sql.*;
+
+import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -52,7 +58,37 @@ public class AssignAdvisor extends javax.swing.JPanel {
                 AssignBtnHandler(evt);
             }
         });
+   
+        
+        addAdvisor_studentID.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+			}
 
+			@Override
+			public void focusLost(FocusEvent e) {
+
+				CheckStudentId(e);
+				
+			}
+			
+        });
+        
+        addAdvisor_advisorId.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				CheckAdvisorId(e);
+			}
+        	
+        });
+            
         assignAdvMMBtn.setForeground(new java.awt.Color(206, 17, 38));
         assignAdvMMBtn.setText("Main Menu");
         assignAdvMMBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -125,9 +161,52 @@ public class AssignAdvisor extends javax.swing.JPanel {
     }//GEN-LAST:event_MainMenuBtnHandler
 
     private void AssignBtnHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AssignBtnHandler
-        // TODO add your handling code here:
+    	String sql = "UPDATE STUDENT SET Advisor_Id =?  WHERE Sid = ?";
+		try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, addAdvisor_advisorId.getText());
+			stmt.setString(2, addAdvisor_studentID.getText());
+			stmt.executeUpdate();
+			JOptionPane.showMessageDialog(null, "Successfully assigned advisor");
+			addAdvisor_advisorId.setText("");
+			addAdvisor_studentID.setText("");
+		} catch (SQLException e) {
+
+		}
+    	
     }//GEN-LAST:event_AssignBtnHandler
 
+	private void CheckStudentId(java.awt.event.FocusEvent evt) {
+
+		String sql = "SELECT * From STUDENT WHERE Sid = ?";
+		try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, addAdvisor_studentID.getText());
+			ResultSet rs = stmt.executeQuery();
+
+			if (!rs.next()) {
+				JOptionPane.showMessageDialog(null, "Enter Valid Student Id");
+			}
+
+		} catch (SQLException e) {
+
+		}
+
+	}
+    
+    private void CheckAdvisorId(java.awt.event.FocusEvent evt){
+
+    	String sql = "SELECT * From INSTRUCTOR WHERE Instructor_Id = ?";
+		try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, addAdvisor_advisorId.getText());
+			ResultSet rs = stmt.executeQuery();
+
+			if (!rs.next()) {
+				JOptionPane.showMessageDialog(null, "Enter Valid Advisor Id");
+			}
+
+		} catch (SQLException e) {
+
+		}
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField addAdvisor_advisorId;
