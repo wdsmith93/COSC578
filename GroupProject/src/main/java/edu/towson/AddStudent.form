@@ -49,7 +49,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="as_female" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="86" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="as_mainMenu" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="as_addStudentBtn" min="-2" max="-2" attributes="0"/>
@@ -59,19 +59,25 @@
                           <Component id="as_currentAddress" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="as_male" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" attributes="0">
-                                      <Component id="as_ssn" max="32767" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="as_sIdNum" min="-2" pref="127" max="-2" attributes="0"/>
+                                      <Component id="as_addSSNFormatted" max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="187" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="as_male" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="12" pref="228" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <Component id="as_sIdNum" min="-2" pref="169" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                               <Component id="as_dob" min="-2" pref="147" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="50" max="32767" attributes="0"/>
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
@@ -119,7 +125,7 @@
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Component id="as_advisorIdNum" min="-2" pref="127" max="-2" attributes="0"/>
-                                      <EmptySpace pref="158" max="32767" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -160,9 +166,9 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="as_ssn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="as_sIdNum" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="as_dob" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="as_addSSNFormatted" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
@@ -231,11 +237,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="as_lastNameActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JTextField" name="as_ssn">
-      <Properties>
-        <Property name="toolTipText" type="java.lang.String" value="Enter SSN"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="as_sIdNum">
       <Properties>
@@ -369,6 +370,14 @@
     <Component class="javax.swing.JLabel" name="jLabel13">
       <Properties>
         <Property name="text" type="java.lang.String" value="Select gender"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="as_addSSNFormatted">
+      <Properties>
+        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+          <Format format="#########" subtype="-1" type="5"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Enter only digits of SSN"/>
       </Properties>
     </Component>
   </SubComponents>

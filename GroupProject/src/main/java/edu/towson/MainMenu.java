@@ -24,6 +24,11 @@ public class MainMenu extends javax.swing.JPanel {
         String[] list = new String[]{" ", "Add a student", "Add a department", "Add an advisor", "Add admin data", 
             "Add a course"};
         mm_addCombo.setModel(new javax.swing.DefaultComboBoxModel<>(list));
+        
+        //TODO: Add new "actions" here to this list to show in combo box
+        String[] actionList = new String[]{" ", "Assign advisor to student", "", "", "", 
+            ""};
+        mm_selectActionComboBx.setModel(new javax.swing.DefaultComboBoxModel<>(actionList));
     }
 
     /**
@@ -39,6 +44,8 @@ public class MainMenu extends javax.swing.JPanel {
         mm_addCombo = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        mm_selectActionComboBx = new javax.swing.JComboBox<>();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Main Menu");
@@ -70,7 +77,17 @@ public class MainMenu extends javax.swing.JPanel {
 
         jLabel2.setText("Select data to add:");
 
-        jLabel3.setText("OR");
+        jLabel3.setText("Search for data:");
+
+        jLabel4.setText("Select an action:");
+
+        mm_selectActionComboBx.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        mm_selectActionComboBx.setToolTipText("");
+        mm_selectActionComboBx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SelectAnActionCBHandler(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -79,7 +96,7 @@ public class MainMenu extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 103, Short.MAX_VALUE)
+                        .addGap(0, 120, Short.MAX_VALUE)
                         .addComponent(populateDbButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(159, 159, 159)
@@ -89,19 +106,19 @@ public class MainMenu extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
                         .addComponent(mm_addCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(jLabel3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(mm_selectActionComboBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(searchMMButton))
                         .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(125, 125, 125)
-                .addComponent(searchMMButton)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,11 +129,15 @@ public class MainMenu extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(mm_addCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addGap(12, 12, 12)
-                .addComponent(searchMMButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(searchMMButton))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(mm_selectActionComboBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
                 .addComponent(populateDbButton)
                 .addContainerGap())
         );
@@ -155,12 +176,35 @@ public class MainMenu extends javax.swing.JPanel {
             }
     }//GEN-LAST:event_searchMMButtonActionPerformed
 
+    private void SelectAnActionCBHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectAnActionCBHandler
+        int selection = mm_selectActionComboBx.getSelectedIndex();
+        switch(selection){
+            case 1:
+                model.goToAssignAdvisor();
+                break;
+            case 2:
+                //TODO
+                break;
+            case 3:
+                //TODO
+                break;
+            case 4:
+                //TODO
+                break;
+            case 5:
+                //TODO
+                break;
+        }
+    }//GEN-LAST:event_SelectAnActionCBHandler
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JComboBox<String> mm_addCombo;
+    private javax.swing.JComboBox<String> mm_selectActionComboBx;
     private javax.swing.JButton populateDbButton;
     private javax.swing.JButton searchMMButton;
     // End of variables declaration//GEN-END:variables
