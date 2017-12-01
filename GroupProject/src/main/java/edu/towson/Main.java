@@ -41,7 +41,6 @@ public class Main implements Runnable {
 
         //TODO: Uncomment the following lines!!
         createTables();
-        
         EventQueue.invokeLater(new Main());
         
     }
@@ -98,10 +97,14 @@ public class Main implements Runnable {
      */
     private static void initPreReq(){
     	String[] courseId = new String[14];
-    	String[] preReqId = new String[20];	
+    	String[] preReqId = new String[20];
+    	int cId = 11000;
+    	int prereqId = 11015;
         for (int i = 0; i < courseId.length; i++){
-        	courseId[i] = String.valueOf(genRandomNumber(11000, 11014));
-        	preReqId[i] = String.valueOf(genRandomNumber(11015, 11020));  
+        	cId = cId+1;
+        	prereqId = prereqId+1;
+        	courseId[i] = String.valueOf(cId);
+        	preReqId[i] = String.valueOf(prereqId);  
         }
         for (int j = 0; j < courseId.length; j++){
         	insertIntoPreReq(courseId[j],preReqId[j]);
@@ -269,6 +272,8 @@ public class Main implements Runnable {
 		String[] sMiddle = new String[100];
 		String[] sLname = new String[100];
 		String[] sSSN = new String[20];
+		int id = 10000;
+		int sSSNId = 900000000;
 		String[] ssid = new String[100];
 		String[] sPermAdd = new String[100];
 		String[] sCurrAdd = new String[100];
@@ -284,8 +289,10 @@ public class Main implements Runnable {
 			sFname[i] = pickFromArray(firstNameArray);
 			sMiddle[i] = "";
 			sLname[i] = pickFromArray(lastNameArray);
-			sSSN[i] = String.valueOf(genRandomNumber(900000000, 900000020));
-			ssid[i] = String.valueOf(genRandomNumber(10000, 10100));
+			sSSNId = sSSNId+1;
+			sSSN[i] = String.valueOf(sSSNId);
+			id = id + 1;
+			ssid[i] = String.valueOf(id);
 			sPermAdd[i] = pickFromArray(streetNameArray) +" "+ pickFromArray(cityNameArray) +" "+ pickFromArray(statesArray)
 					+ pickFromArray(zipCodeArray);
 			sCurrAdd[i] = pickFromArray(streetNameArray) +" "+ pickFromArray(cityNameArray) +" " +pickFromArray(statesArray)

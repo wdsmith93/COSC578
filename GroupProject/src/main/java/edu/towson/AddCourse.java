@@ -3,6 +3,8 @@ package edu.towson;
 import java.awt.BorderLayout;
 import java.sql.*;
 import java.util.LinkedList;
+
+import javax.swing.JOptionPane;
 import javax.swing.SpinnerModel;
 
 /**
@@ -195,10 +197,62 @@ public class AddCourse extends javax.swing.JPanel {
             }
     }//GEN-LAST:event_RtnToMainMenuBtn
 
-    private void ac_addCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ac_addCourseActionPerformed
-        // TODO Navya could you add logic here to perform the write of the form info to the database?
-    }//GEN-LAST:event_ac_addCourseActionPerformed
+	private void ac_addCourseActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ac_addCourseActionPerformed
+		// TODO Navya could you add logic here to perform the write of the form
+		// info to the database?
+		boolean sIdIsValid = checkCourseId();
+		boolean showErrorMsg = false;
+		String errorMessage = "";
+		String sql = "INSERT INTO COURSE(Course_Id, Course_Title, Course_Desc, Begin_date, End_date) VALUES(?,?,?,?,?)";
+		if (sIdIsValid == true) {
+			try (Connection conn = Main.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				pstmt.setString(1, ac_courseID.getText());
+				pstmt.setString(2, ac_cTitle.getText());
+				pstmt.setString(3, ac_cDescription.getText());
+				pstmt.setString(4, ac_cStartDate.getText());
+				pstmt.setString(5, ac_cEndDate.getText());
+				pstmt.executeUpdate();
+				JOptionPane.showMessageDialog(null, "Successfully added course");
+				ac_courseID.setText("");
+				ac_cTitle.setText("");
+				ac_cDescription.setText("");
+				ac_cStartDate.setText("");
+				ac_cEndDate.setText("");
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		} else {
+			if (sIdIsValid == false) {
+				errorMessage = errorMessage + "Course id already exist \n";
+				showErrorMsg = true;
+			}
+		}
+		if (showErrorMsg == true) {
+			JOptionPane.showMessageDialog(null, errorMessage);
+		}
+	}//GEN-LAST:event_ac_addCourseActionPerformed
+    
+	private boolean checkCourseId() {
+		boolean result = false;
 
+		String sql = "SELECT * From COURSE WHERE Course_Id = ?";
+		try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, ac_courseID.getText());
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				result = false;
+			} else {
+				result = true;
+			}
+
+		} catch (SQLException e) {
+
+		}
+		return result;
+
+	}
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ac_addCourse;

@@ -1,6 +1,12 @@
 package edu.towson;
 
 import java.awt.BorderLayout;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -322,11 +328,109 @@ public class AddStudent extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_as_lastNameActionPerformed
 
-    private void as_addStudentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_as_addStudentBtnActionPerformed
-        // TODO Navya could you add logic here to perform the write of the form info to the database?
-    }//GEN-LAST:event_as_addStudentBtnActionPerformed
+	private void as_addStudentBtnActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_as_addStudentBtnActionPerformed
+		// TODO Navya could you add logic here to perform the write of the form
+		// info to the database?
+		boolean sSSNIsValid = checkSSN();
+		boolean sIdIsValid = checkSId();
+		boolean showErrorMsg = false;
+		String errorMessage = "";
+		String sql = "INSERT INTO STUDENT(FName , Middle , LName , SSN , Sid , Perm_address, Current_adress,Grant_Auth,Email_id,Sex,DOB ) "
+				+ "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+		if (sIdIsValid == true && sSSNIsValid == true) {
+			try (Connection conn = Main.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				pstmt.setString(1, as_firstName.getText());
+				pstmt.setString(2, as_middleName.getText());
+				pstmt.setString(3, as_lastName.getText());
+				pstmt.setString(4, as_addSSNFormatted.getText());
+				pstmt.setString(5, as_sIdNum.getText());
+				pstmt.setString(6, as_permAddress.getText());
+				pstmt.setString(7, as_currentAddress.getText());
+				pstmt.setString(8, as_grantAuth.getText());
+				pstmt.setString(9, as_email.getText());
+				
+				if(as_male.isSelected()){
+					pstmt.setString(10, as_male.getText());	
+				}
+				else {
+					pstmt.setString(10, as_female.getText());
+				}
+				pstmt.setString(11, as_dob.getText());
+				pstmt.executeUpdate();
+				JOptionPane.showMessageDialog(null, "Successfully added student");
+				as_firstName.setText("");
+				as_middleName.setText("");
+				as_lastName.setText("");
+				as_addSSNFormatted.setText("");
+				as_sIdNum.setText("");
+				as_permAddress.setText("");
+				as_currentAddress.setText("");
+				as_grantAuth.setText("");
+				as_email.setText("");
+				as_dob.setText("");
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		} else {
+			if (sSSNIsValid == false) {
+				errorMessage = errorMessage + "Duplicate SSN\n";
+				showErrorMsg = true;
+			}
+			if (sIdIsValid == false) {
+				errorMessage = errorMessage + "Please enter a valid student id number\n";
+				showErrorMsg = true;
+			}
+		}
+		if (showErrorMsg == true) {
+			JOptionPane.showMessageDialog(null, errorMessage);
+		}
+	}// GEN-LAST:event_as_addStudentBtnActionPerformed
 
+	private boolean checkSSN() {
+		boolean result = false;
 
+		String sql = "SELECT * From STUDENT WHERE SSN = ?";
+		try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, as_addSSNFormatted.getText());
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				// JOptionPane.showMessageDialog(null, "Enter Valid Student
+				// Id");
+				result = false;
+			} else {
+				result = true;
+			}
+
+		} catch (SQLException e) {
+
+		}
+		return result;
+	}
+
+	private boolean checkSId() {
+		boolean result = false;
+
+		String sql = "SELECT * From IDCARD WHERE Id_No = ?";
+		try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, as_sIdNum.getText());
+			ResultSet rs = stmt.executeQuery();
+
+			if (!rs.next()) {
+				// JOptionPane.showMessageDialog(null, "Enter Valid Student
+				// Id");
+				result = false;
+			} else {
+				result = true;
+			}
+
+		} catch (SQLException e) {
+
+		}
+		return result;
+
+	}
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField as_addSSNFormatted;
     private javax.swing.JButton as_addStudentBtn;
