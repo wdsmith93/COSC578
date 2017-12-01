@@ -1,8 +1,6 @@
 package edu.towson;
 
 import java.awt.BorderLayout;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.sql.*;
 
 import javax.swing.JOptionPane;
@@ -135,7 +133,16 @@ public class AssignAdvisor extends javax.swing.JPanel {
     }//GEN-LAST:event_MainMenuBtnHandler
 
     private void AssignBtnHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AssignBtnHandler
-    	String sql = "UPDATE STUDENT SET Advisor_Id =?  WHERE Sid = ?";
+    	boolean sIdIsValid = checkStudentId();
+        boolean aIdIsValid = checkAdvisorId();
+        boolean showErrorMsg = false;
+        String errorMessage = "";
+        
+        String sql = "UPDATE STUDENT SET Advisor_Id =?  WHERE Sid = ?";
+        //String checkStudentId = "SELECT * From STUDENT WHERE Sid = ?";
+        //String checkAdvisorId = "SELECT * From INSTRUCTOR WHERE Instructor_Id = ?";
+        
+        if (sIdIsValid == true && aIdIsValid == true){
 		try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 			stmt.setString(1, addAdvisor_advisorId.getText());
 			stmt.setString(2, addAdvisor_studentID.getText());
@@ -146,18 +153,33 @@ public class AssignAdvisor extends javax.swing.JPanel {
 		} catch (SQLException e) {
 
 		}
+        } else {
+            if(sIdIsValid == false){
+                errorMessage = errorMessage + "Please enter a valid student id number\n";
+                showErrorMsg = true;
+            }
+            if(aIdIsValid == false){
+                errorMessage = errorMessage + "Please enter a valid advisor id number\n";
+                showErrorMsg = true;
+            }
+        }
+        if(showErrorMsg == true){
+            JOptionPane.showMessageDialog(null, errorMessage);
+        }
     	
     }//GEN-LAST:event_AssignBtnHandler
 
     private void addAdvisor_studentIDFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_addAdvisor_studentIDFocusLost
-        checkStudentId(evt);
+        //checkStudentId(evt);
     }//GEN-LAST:event_addAdvisor_studentIDFocusLost
 
     private void addAdvisor_advisorIdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_addAdvisor_advisorIdFocusLost
-        checkAdvisorId(evt);
+        //checkAdvisorId(evt);
     }//GEN-LAST:event_addAdvisor_advisorIdFocusLost
 
-	private void checkStudentId(java.awt.event.FocusEvent evt) {
+	//private void checkStudentId(java.awt.event.FocusEvent evt) {
+    private boolean checkStudentId() {
+        boolean result = false;
 
 		String sql = "SELECT * From STUDENT WHERE Sid = ?";
 		try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -165,16 +187,22 @@ public class AssignAdvisor extends javax.swing.JPanel {
 			ResultSet rs = stmt.executeQuery();
 
 			if (!rs.next()) {
-				JOptionPane.showMessageDialog(null, "Enter Valid Student Id");
-			}
+				//JOptionPane.showMessageDialog(null, "Enter Valid Student Id");
+                                result = false;
+			} else {
+                            result = true;
+                        }
 
 		} catch (SQLException e) {
 
 		}
+                return result;
 
 	}
     
-    private void checkAdvisorId(java.awt.event.FocusEvent evt){
+    //private void checkAdvisorId(java.awt.event.FocusEvent evt){
+    private boolean checkAdvisorId(){
+        boolean result = false;
 
     	String sql = "SELECT * From INSTRUCTOR WHERE Instructor_Id = ?";
 		try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -182,12 +210,16 @@ public class AssignAdvisor extends javax.swing.JPanel {
 			ResultSet rs = stmt.executeQuery();
 
 			if (!rs.next()) {
-				JOptionPane.showMessageDialog(null, "Enter Valid Advisor Id");
-			}
+				//JOptionPane.showMessageDialog(null, "Enter Valid Advisor Id");
+                                result = false;
+			} else {
+                            result = true;
+                        }
 
 		} catch (SQLException e) {
 
 		}
+                return result;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
