@@ -19,7 +19,8 @@ import javax.swing.JOptionPane;
  */
 public class AddDepartment extends javax.swing.JPanel {
 
-    private DatabaseView.Model model;
+    private Model model = new Model();
+    Model.ModelObserver mObserver = model.new ModelObserver();
     /**
      * Creates new form AddDepartment
      */
@@ -27,10 +28,10 @@ public class AddDepartment extends javax.swing.JPanel {
         initComponents();
     }
     
-    public AddDepartment(DatabaseView.Model model) {
+    public AddDepartment(Model model) {
         super(new BorderLayout());
         this.model = model;
-        //model.addObserver(new DatabaseView.View.ModelObserver());
+        model.addObserver(mObserver);
         
         initComponents();
     }

@@ -8,7 +8,8 @@ import java.awt.BorderLayout;
  */
 public class MainMenu extends javax.swing.JPanel {
 
-    private DatabaseView.Model model;
+    private Model model = new Model();
+    Model.ModelObserver mObserver = model.new ModelObserver();
     /**
      * Creates new form MainMenu
      */
@@ -16,9 +17,10 @@ public class MainMenu extends javax.swing.JPanel {
         initComponents();
     }
     
-    public MainMenu(DatabaseView.Model model) {
+    public MainMenu(Model model) {
         super(new BorderLayout());
         this.model = model;
+        model.addObserver(mObserver);
         initComponents();
         String[] list = new String[]{" ", "Add a student", "Add a department", "Add an instructor", "Add admin data", 
             "Add a course"};

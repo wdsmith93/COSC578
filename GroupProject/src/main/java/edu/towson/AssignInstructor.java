@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.towson;
 
 import java.awt.BorderLayout;
@@ -18,7 +13,8 @@ import javax.swing.JOptionPane;
  */
 public class AssignInstructor extends javax.swing.JPanel {
 
-    private DatabaseView.Model model;
+    private Model model = new Model();
+    Model.ModelObserver mObserver = model.new ModelObserver();
     /**
      * Creates new form AssignInstructor
      */
@@ -26,9 +22,10 @@ public class AssignInstructor extends javax.swing.JPanel {
         initComponents();
     }
     
-    public AssignInstructor(DatabaseView.Model model) {
+    public AssignInstructor(Model model) {
         super(new BorderLayout());
         this.model = model;
+        model.addObserver(mObserver);
         initComponents();
         
     }

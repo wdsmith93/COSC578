@@ -25,8 +25,6 @@ public class Main implements Runnable {
     private static String[] zipCodeArray = new String[432];
     private static String[] statesArray = new String[10];
     private static Random rand = new Random(System.currentTimeMillis());
-
-    
    
     
     
@@ -47,32 +45,32 @@ public class Main implements Runnable {
 
     
     @Override
-        public void run() {
-            JFrame frame = new JFrame("BCCC Database");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.add(new DatabaseView());
-            frame.pack();
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        }
+    public void run() {
+        JFrame frame = new JFrame("BCCC Database");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(new DatabaseView());
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+        
     /**
      * After creating the tables, the following method will generate fake data for the individual tables
      */
-    
-	public static void populateDB() {
+    public static void populateDB() {
 
-		initDepartment();
-		initInstructor();
-		initClassroom();
-		initCourse();
-		initAdmin();
-		initIdcard();
-		initStudent();
-		initClassCourse();
-		initEnrolls();
-		initStudentPhNo();
-		initPreReq();
-	}
+        initDepartment();
+        initInstructor();
+        initClassroom();
+        initCourse();
+        initAdmin();
+        initIdcard();
+        initStudent();
+        initClassCourse();
+        initEnrolls();
+        initStudentPhNo();
+        initPreReq();
+    }
     /**
      * Allows single records to be inserted into the PREREQUISITE table
      * @param courseId  course id 

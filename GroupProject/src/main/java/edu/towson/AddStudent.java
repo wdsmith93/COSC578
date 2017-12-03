@@ -14,7 +14,8 @@ import javax.swing.JOptionPane;
  */
 public class AddStudent extends javax.swing.JPanel {
 
-    private DatabaseView.Model model;
+    private Model model = new Model();
+    Model.ModelObserver mObserver = model.new ModelObserver();
     /**
      * Creates new form AddStudent
      */
@@ -22,9 +23,10 @@ public class AddStudent extends javax.swing.JPanel {
         initComponents();
     }
     
-    public AddStudent(DatabaseView.Model model) {
+    public AddStudent(Model model) {
         super(new BorderLayout());
         this.model = model;
+        model.addObserver(mObserver);
         initComponents();
     }
 

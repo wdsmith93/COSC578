@@ -5,7 +5,6 @@ import java.sql.*;
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
-import javax.swing.SpinnerModel;
 
 /**
  *
@@ -13,7 +12,8 @@ import javax.swing.SpinnerModel;
  */
 public class AddCourse extends javax.swing.JPanel {
 
-    private DatabaseView.Model model;
+    private Model model = new Model();
+    Model.ModelObserver mObserver = model.new ModelObserver();
     /**
      * Creates new form AddCourse
      */
@@ -21,9 +21,10 @@ public class AddCourse extends javax.swing.JPanel {
         initComponents();
     }
     
-    public AddCourse(DatabaseView.Model model) {
+    public AddCourse(Model model) {
         super(new BorderLayout());
         this.model = model;
+        model.addObserver(mObserver);
         
         initComponents();
         
@@ -230,7 +231,7 @@ public class AddCourse extends javax.swing.JPanel {
 		if (showErrorMsg == true) {
 			JOptionPane.showMessageDialog(null, errorMessage);
 		}
-	}//GEN-LAST:event_ac_addCourseActionPerformed
+	}                                            
     
 	private boolean checkCourseId() {
 		boolean result = false;

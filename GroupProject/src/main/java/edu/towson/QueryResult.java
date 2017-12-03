@@ -1,23 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.towson;
+
 
 import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author williamsmith
  */
 public class QueryResult extends javax.swing.JPanel {
-
-    private DatabaseView.Model model;
+    
+    ResultSet rs, rsForSelection;
+    List<Object> options = new ArrayList<>();
+    String sql = "";
+    //static TableList tableList = TableList.COURSE;
+    TableList tableList;
+    
+    //This is the column in a table holding a primary key to uniquely id a row for edits/deletions
+    int keyColumn;
+    String keyColumnName;
+    
+    private Model model = new Model();
+    Model.ModelObserver mObserver = model.new ModelObserver();
     
     /**
      * Creates new form QueryResult
@@ -26,33 +36,105 @@ public class QueryResult extends javax.swing.JPanel {
         initComponents();
     }
     
-    public QueryResult(DatabaseView.Model model) {
-        super(new BorderLayout());
-        this.model = model;
-        
-        initComponents();
-        updateTableWithResults();
+    public TableList getQueryResultTableListItem() {
+        return tableList;
     }
     
-    private void updateTableWithResults() {
-        //boolean result = false;
-
-            String sql = "SELECT * From DEPARTMENT";
-            try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            //TODO: PROB NEEDS TO CHANGE THIS TO TABLE??	
+    public void setQueryResultTableListItem(TableList tl) {
+        this.tableList = tl;
+    }
+    
+    /**
+     * This constructor is used to help identify the table used in the query results
+     * Options for selecting records to edit/delete will be based on which table
+     * was included in the results. 
+     * For example, queries on the STUDENT table would use Sid for the combo box to select which item to edit/delete
+     * @param model 
+     * @param item enum representing table used in query
+     */
+    public QueryResult(Model model, TableList item) {
+        super(new BorderLayout());
+        this.model = model;
+        this.tableList = item;
+        model.addObserver(mObserver);
+        switch(item){
+            case STUDENT:
+                keyColumn = 5;
+                tableList = TableList.STUDENT;
+                keyColumnName = "student id#";
+                sql = "SELECT * From STUDENT";
+                break;
+        case ENROLLS:
+            //TODO: For this we need to show option for composite key?
+                keyColumn = 1;
+                keyColumnName = "SSN#";
+                break;
+        case STUDENT_PHONE:
+            //TODO: For this we need to show option for composite key?
+                keyColumn = 2;
+                keyColumnName = "SSN#";
+                break;
+        case COURSE:
+                //keyColumn = 1;
+                //keyColumnName = "course id#";
+                break;
+        case INSTRUCTOR:
+                keyColumn = 1;
+                //DatabaseView.setItem(TableList.INSTRUCTOR);
+                tableList = TableList.INSTRUCTOR;
+                keyColumnName = "instructor id#";
+                sql = "SELECT * From INSTRUCTOR";
+                break;
+        case DEPARTMENT:
+                keyColumn = 2;
+                keyColumnName = "department#";
+                break;
+        case PREREQUESITE:
+            //TODO: For this we need to show option for composite key?
+                keyColumn = 1;
+                keyColumnName = "course id#";
+                break;
+        case IDCARD:
+                keyColumn = 1;
+                keyColumnName = "id card#";
+                break;
+        case ADMIN:
+                keyColumn = 1;
+                keyColumnName = "admin id#";
+                break;
+        case CLASSROOM:
+                keyColumn = 1;
+                keyColumnName = "class id#";
+                break;
+        case CLASSCOURSE:
+            //TODO: For this we need to show option for composite key?
+                keyColumn = 1;
+                keyColumnName = "class id#";
+                break;
+        }
+        initComponents();
+        updateTableWithResults(sql);
+    }
+    
+    private void updateTableWithResults(String s) {
+            try (Connection conn = Main.connect(); 
+                    PreparedStatement stmt = conn.prepareStatement(s);
+                    PreparedStatement stmt2 = conn.prepareStatement(s)) {	
                 //stmt.setString(1, TODO.getText());
-                ResultSet rs = stmt.executeQuery();
-
+                rs = stmt.executeQuery();
                 if (!rs.next()) {
-          //              result = false;
                 } else {
-            //        result = true;
                     resultTable.setModel(ReusableTableModel.buildTableModel(rs));
                 }
+                rsForSelection = stmt.executeQuery();
+                while (rsForSelection.next()) {
+                    options.add(rsForSelection.getString(keyColumn));
+                }
+                conn.close();
             } catch (SQLException e) {
 
             }
-            //return result;
+            jLabel1.setText(s);
 	}
 
     /**
@@ -66,6 +148,8 @@ public class QueryResult extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         resultTable = new javax.swing.JTable();
+        selectRecordEditBtn = new javax.swing.JButton();
+        selectRecordDeleteBtn = new javax.swing.JButton();
 
         mainMenuBtn.setForeground(new java.awt.Color(206, 17, 38));
         mainMenuBtn.setText("Main Menu");
@@ -90,23 +174,42 @@ public class QueryResult extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(resultTable);
 
+        selectRecordEditBtn.setForeground(new java.awt.Color(206, 17, 38));
+        selectRecordEditBtn.setText("Select Record to Edit");
+        selectRecordEditBtn.setToolTipText("");
+        selectRecordEditBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectRecordEditBtnActionPerformed(evt);
+            }
+        });
+
+        selectRecordDeleteBtn.setForeground(new java.awt.Color(206, 17, 38));
+        selectRecordDeleteBtn.setText("Select Record to Delete");
+        selectRecordDeleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectRecordDeleteBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(selectRecordDeleteBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(selectRecordEditBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(mainMenuBtn))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(175, 175, 175)
                 .addComponent(jLabel1)
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,7 +219,10 @@ public class QueryResult extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                .addComponent(mainMenuBtn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mainMenuBtn)
+                    .addComponent(selectRecordDeleteBtn)
+                    .addComponent(selectRecordEditBtn))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -128,11 +234,31 @@ public class QueryResult extends javax.swing.JPanel {
             }
     }//GEN-LAST:event_mainMenuBtnActionPerformed
 
+    private void selectRecordEditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectRecordEditBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_selectRecordEditBtnActionPerformed
+
+    private void selectRecordDeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectRecordDeleteBtnActionPerformed
+        String selectedChoice = (String) JOptionPane.showInputDialog(null,
+            "Select " + keyColumnName  + " to delete",
+            "Delete a Record",
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            options.toArray(),
+            options.get(0));
+        
+        
+        
+        
+    }//GEN-LAST:event_selectRecordDeleteBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton mainMenuBtn;
     private javax.swing.JTable resultTable;
+    private javax.swing.JButton selectRecordDeleteBtn;
+    private javax.swing.JButton selectRecordEditBtn;
     // End of variables declaration//GEN-END:variables
 }
