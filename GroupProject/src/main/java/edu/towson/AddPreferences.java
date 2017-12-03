@@ -251,7 +251,6 @@ public class AddPreferences extends javax.swing.JPanel {
             setUserName(u);
         if(!isNull(p))
             setPWord(p);
-        System.out.println("__________________: " + p);
         if(!isNull(a))
             setAdminId(a);
         
