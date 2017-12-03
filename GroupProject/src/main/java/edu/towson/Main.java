@@ -2,7 +2,6 @@ package edu.towson;
 
 import java.awt.EventQueue;
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -756,42 +755,19 @@ public class Main implements Runnable {
      * @param array to populate
      */
     private static void readFromFile(String filename, String[] array) {
-//        BufferedReader bufferedReader;
-//        FileReader fileReader;
-//
-//        try(BufferedReader br = new BufferedReader(new FileReader(filename))) {
-//
-//            String currentLine;
-//            int count = 0;
-//
-//            while ((currentLine = br.readLine()) != null) {
-//                //System.out.println(sCurrentLine);
-//                array[count] = currentLine;
-//                count++;
-//            }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
         InputStream is = Main.class.getResourceAsStream("/" + filename);
-        //BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         try(BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 
             String currentLine;
             int count = 0;
 
             while ((currentLine = br.readLine()) != null) {
-                //System.out.println(sCurrentLine);
                 array[count] = currentLine;
                 count++;
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
     
     /**
