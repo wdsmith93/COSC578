@@ -23,10 +23,22 @@ public class Control extends JPanel {
     private QueryResult queryResult;
     private TableList item;
     private AddPreferences prefs; 
+    private RegisterForCourse registerForCourse;
+    private DropCourse dropCourse;
     
     public Control(Model model, SearchMenu sm) {
         this.model = model;
         this.searchMenu = sm;
+    }
+    
+    public Control(Model model, RegisterForCourse rfc) {
+        this.model = model;
+        this.registerForCourse = rfc;
+    }
+    
+    public Control(Model model, DropCourse dc) {
+        this.model = model;
+        this.dropCourse = dc;
     }
     
     public Control(Model model, AddPreferences ap) {
