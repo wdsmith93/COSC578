@@ -120,11 +120,6 @@ public class AddAdmin extends javax.swing.JPanel {
         jLabel8.setText("Enter expiration date");
 
         adad_providedIdNum.setToolTipText("Enter ID# from provided proof of ID");
-        adad_providedIdNum.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                adad_providedIdNumActionPerformed(evt);
-            }
-        });
 
         adad_providedIdDateIssued.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
         adad_providedIdDateIssued.setToolTipText("Enter date of issue for provided ID");
@@ -265,10 +260,6 @@ public class AddAdmin extends javax.swing.JPanel {
                 break;
         }
     }//GEN-LAST:event_AddAdminStatusTypeSelected
-
-    private void adad_providedIdNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adad_providedIdNumActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_adad_providedIdNumActionPerformed
 
     private void aa_addDataBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aa_addDataBtnActionPerformed
         // TODO Navya could you add logic here to perform the write of the form info to the database?

@@ -46,6 +46,7 @@ public class MainMenu extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         mm_selectActionComboBx = new javax.swing.JComboBox<>();
+        prefBtn = new javax.swing.JButton();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Main Menu");
@@ -89,6 +90,14 @@ public class MainMenu extends javax.swing.JPanel {
             }
         });
 
+        prefBtn.setForeground(new java.awt.Color(206, 17, 38));
+        prefBtn.setText("Preferences");
+        prefBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prefBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -96,7 +105,9 @@ public class MainMenu extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 120, Short.MAX_VALUE)
+                        .addContainerGap()
+                        .addComponent(prefBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(populateDbButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(159, 159, 159)
@@ -138,7 +149,9 @@ public class MainMenu extends javax.swing.JPanel {
                     .addComponent(jLabel4)
                     .addComponent(mm_selectActionComboBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
-                .addComponent(populateDbButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(populateDbButton)
+                    .addComponent(prefBtn))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -197,6 +210,13 @@ public class MainMenu extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_SelectAnActionCBHandler
 
+    private void prefBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prefBtnActionPerformed
+        String cmd = evt.getActionCommand();
+            if ("Preferences".equals(cmd)) {
+                model.goToPreferences();
+            }
+    }//GEN-LAST:event_prefBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -206,6 +226,7 @@ public class MainMenu extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> mm_addCombo;
     private javax.swing.JComboBox<String> mm_selectActionComboBx;
     private javax.swing.JButton populateDbButton;
+    private javax.swing.JButton prefBtn;
     private javax.swing.JButton searchMMButton;
     // End of variables declaration//GEN-END:variables
 }

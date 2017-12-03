@@ -82,6 +82,12 @@ public class Model extends Observable {
         setChanged();
         notifyObservers(tl);
     }
+    
+    public void goToPreferences() {
+        cSelection = CardSelection.PREFERENCES;
+        setChanged();
+        notifyObservers(cSelection);
+    }
 
         
     public class ModelObserver implements Observer {
@@ -113,6 +119,9 @@ public class Model extends Observable {
              
            else  if (arg == CardSelection.ASSIGN_INSTRUCTOR) 
                 DatabaseView.setLayout("assign_instructor");
+           
+           else  if (arg == CardSelection.PREFERENCES) 
+                DatabaseView.setLayout("preferences");
             
            else  if (arg == CardSelection.QUERY_RESULT) 
                 DatabaseView.setLayout("query_result", tl);
