@@ -1,7 +1,6 @@
 package edu.towson;
 
 import java.awt.CardLayout;
-import java.awt.EventQueue;
 import javax.swing.JPanel;
 
 /**
@@ -31,6 +30,9 @@ public class DatabaseView extends JPanel {
         AssignAdvisor assignAdvisor = new AssignAdvisor(model_old);
         AssignInstructor assignInstructor = new AssignInstructor(model_old);
         QueryResult queryResult = new QueryResult(model_old, item);
+        AddPreferences prefs = new AddPreferences(model_old);
+        RegisterForCourse registerForCourse = new RegisterForCourse(model_old);
+        DropCourse dropCourse = new DropCourse(model_old);
         item = queryResult.getQueryResultTableListItem();
         Control control2 = new Control(model_old, mainMenu);
         Control control3 = new Control(model_old, addStudent);
@@ -42,6 +44,9 @@ public class DatabaseView extends JPanel {
         Control control9 = new Control(model_old, assignAdvisor);
         Control control1 = new Control(model_old, assignInstructor);
         Control control11 = new Control(model_old, queryResult, item);
+        Control control12 = new Control(model_old, prefs);
+        Control control13 = new Control(model_old, registerForCourse);
+        Control control14 = new Control(model_old, dropCourse);
         
         panelSet = this;
         panelSet.setLayout(layout);
@@ -55,7 +60,12 @@ public class DatabaseView extends JPanel {
         panelSet.add(searchMenu, "search_menu");
         panelSet.add(assignAdvisor, "assign_advisor");
         panelSet.add(assignInstructor, "assign_instructor");
+
         //panelSet.add(queryResult, "query_result");
+        panelSet.add(prefs, "preferences");
+        panelSet.add(registerForCourse, "register_course");
+        panelSet.add(dropCourse, "drop_course");
+
         panelSet.add(control1);
         panelSet.add(control2);
         panelSet.add(control3);
@@ -66,6 +76,7 @@ public class DatabaseView extends JPanel {
         panelSet.add(control8);
         panelSet.add(control9);
         //panelSet.add(control11);
+        panelSet.add(control12);
         panelSet.revalidate();
         setLayout("main_menu");
     }

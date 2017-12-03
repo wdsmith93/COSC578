@@ -27,6 +27,18 @@ public class Model extends Observable {
         setChanged();
         notifyObservers(cSelection);
     }
+    
+    public void goToRegisterForCourse() {
+        cSelection = CardSelection.REGISTER_COURSE;
+        setChanged();
+        notifyObservers(cSelection);
+    }
+    
+    public void goToWithdrawFromCourse() {
+        cSelection = CardSelection.DROP_COURSE;
+        setChanged();
+        notifyObservers(cSelection);
+    }
 
     public void returnToMainMenu() {
         cSelection = init();
@@ -82,6 +94,12 @@ public class Model extends Observable {
         setChanged();
         notifyObservers(tl);
     }
+    
+    public void goToPreferences() {
+        cSelection = CardSelection.PREFERENCES;
+        setChanged();
+        notifyObservers(cSelection);
+    }
 
         
     public class ModelObserver implements Observer {
@@ -113,6 +131,15 @@ public class Model extends Observable {
              
            else  if (arg == CardSelection.ASSIGN_INSTRUCTOR) 
                 DatabaseView.setLayout("assign_instructor");
+           
+           else  if (arg == CardSelection.PREFERENCES) 
+                DatabaseView.setLayout("preferences");
+           
+           else  if (arg == CardSelection.REGISTER_COURSE) 
+                DatabaseView.setLayout("register_course");
+           
+           else  if (arg == CardSelection.DROP_COURSE) 
+                DatabaseView.setLayout("drop_course");
             
            else  if (arg == CardSelection.QUERY_RESULT) 
                 DatabaseView.setLayout("query_result", tl);

@@ -289,9 +289,6 @@
       <Properties>
         <Property name="toolTipText" type="java.lang.String" value="Enter ID# from provided proof of ID"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="adad_providedIdNumActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JFormattedTextField" name="adad_providedIdDateIssued">
       <Properties>

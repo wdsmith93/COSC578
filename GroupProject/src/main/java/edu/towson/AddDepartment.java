@@ -173,8 +173,7 @@ public class AddDepartment extends javax.swing.JPanel {
     }//GEN-LAST:event_RtnToMainMenuBtn
 
     private void ad_AddDeptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ad_AddDeptBtnActionPerformed
-        // TODO Navya could you add logic here to perform the write of the form info to the database?
-    	boolean sIdIsValid = checkDeptId();
+        boolean sIdIsValid = checkDeptId();
     	boolean showErrorMsg = false;
         String errorMessage = "";
         String sql = "INSERT INTO DEPARTMENT(Dept_Name, Dept_Num, Office_No, Office_Ph_No) VALUES(?,?,?,?)";

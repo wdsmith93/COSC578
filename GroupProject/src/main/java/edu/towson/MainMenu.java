@@ -1,6 +1,10 @@
 package edu.towson;
 
 import java.awt.BorderLayout;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,8 +30,8 @@ public class MainMenu extends javax.swing.JPanel {
             "Add a course"};
         mm_addCombo.setModel(new javax.swing.DefaultComboBoxModel<>(list));
         
-        String[] actionList = new String[]{" ", "Assign advisor to student", "Assign instructor to course", "", "", 
-            ""};
+        String[] actionList = new String[]{" ", "Assign advisor to student", "Assign instructor to course", "Register for a course",
+            "Withdraw from a course", ""};
         mm_selectActionComboBx.setModel(new javax.swing.DefaultComboBoxModel<>(actionList));
     }
 
@@ -46,6 +50,8 @@ public class MainMenu extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         mm_selectActionComboBx = new javax.swing.JComboBox<>();
+        prefBtn = new javax.swing.JButton();
+        deleteAllBtn = new javax.swing.JButton();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Main Menu");
@@ -89,20 +95,26 @@ public class MainMenu extends javax.swing.JPanel {
             }
         });
 
+        prefBtn.setForeground(new java.awt.Color(206, 17, 38));
+        prefBtn.setText("Preferences");
+        prefBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prefBtnActionPerformed(evt);
+            }
+        });
+
+        deleteAllBtn.setForeground(new java.awt.Color(206, 17, 38));
+        deleteAllBtn.setText("Drop All Tables");
+        deleteAllBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteAllBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 120, Short.MAX_VALUE)
-                        .addComponent(populateDbButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(159, 159, 159)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,6 +131,21 @@ public class MainMenu extends javax.swing.JPanel {
                             .addComponent(mm_selectActionComboBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(searchMMButton))
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(prefBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(populateDbButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(159, 159, 159)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(deleteAllBtn)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,8 +164,12 @@ public class MainMenu extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(mm_selectActionComboBx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
-                .addComponent(populateDbButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addComponent(deleteAllBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(populateDbButton)
+                    .addComponent(prefBtn))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -178,6 +209,9 @@ public class MainMenu extends javax.swing.JPanel {
 
     private void SelectAnActionCBHandler(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectAnActionCBHandler
         int selection = mm_selectActionComboBx.getSelectedIndex();
+        
+        //TODO: If time allows should account for saving grades: SID, CID, assignment#, total points, earned points. Can derive final grade
+        
         switch(selection){
             case 1:
                 model.goToAssignAdvisor();
@@ -186,10 +220,10 @@ public class MainMenu extends javax.swing.JPanel {
                 model.goToAssignInstructor();
                 break;
             case 3:
-                //TODO
+                model.goToRegisterForCourse();
                 break;
             case 4:
-                //TODO
+                model.goToWithdrawFromCourse();
                 break;
             case 5:
                 //TODO
@@ -197,8 +231,45 @@ public class MainMenu extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_SelectAnActionCBHandler
 
+    private void prefBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prefBtnActionPerformed
+        String cmd = evt.getActionCommand();
+            if ("Preferences".equals(cmd)) {
+                model.goToPreferences();
+            }
+    }//GEN-LAST:event_prefBtnActionPerformed
+
+    private void deleteAllBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAllBtnActionPerformed
+        boolean showErrorMsg = false;
+        String errorMessage = "";
+        String[] sqlArray = new String[11];
+        sqlArray[0] = "DROP TABLE CLASSCOURSE";
+        sqlArray[1] = "DROP TABLE CLASSROOM";
+        sqlArray[2] = "DROP TABLE ENROLLS";
+        sqlArray[3] = "DROP TABLE PREREQUISITE";
+        sqlArray[4] = "DROP TABLE STUDENT_PHONE";
+        sqlArray[5] = "DROP TABLE COURSE";
+        sqlArray[6] = "DROP TABLE STUDENT";
+        sqlArray[7] = "DROP TABLE INSTRUCTOR";
+        sqlArray[8] = "DROP TABLE IDCARD";
+        sqlArray[9] = "DROP TABLE ADMIN";
+        sqlArray[10] = "DROP TABLE DEPARTMENT";
+        
+        
+        for (int i = 0; i < sqlArray.length; i++) {
+            try (Connection conn = Main.connect();
+                    
+                    PreparedStatement pstmt = conn.prepareStatement(sqlArray[i]);){
+                pstmt.executeUpdate();
+                
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_deleteAllBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton deleteAllBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -206,6 +277,7 @@ public class MainMenu extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> mm_addCombo;
     private javax.swing.JComboBox<String> mm_selectActionComboBx;
     private javax.swing.JButton populateDbButton;
+    private javax.swing.JButton prefBtn;
     private javax.swing.JButton searchMMButton;
     // End of variables declaration//GEN-END:variables
 }
