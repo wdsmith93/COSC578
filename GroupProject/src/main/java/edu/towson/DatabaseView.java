@@ -30,7 +30,7 @@ public class DatabaseView extends JPanel {
         SearchMenu searchMenu = new SearchMenu(model_old);
         AssignAdvisor assignAdvisor = new AssignAdvisor(model_old);
         AssignInstructor assignInstructor = new AssignInstructor(model_old);
-        queryResult = new QueryResult(model_old, item);
+        QueryResult queryResult = new QueryResult(model_old, item);
         item = queryResult.getQueryResultTableListItem();
         Control control2 = new Control(model_old, mainMenu);
         Control control3 = new Control(model_old, addStudent);
@@ -55,7 +55,7 @@ public class DatabaseView extends JPanel {
         panelSet.add(searchMenu, "search_menu");
         panelSet.add(assignAdvisor, "assign_advisor");
         panelSet.add(assignInstructor, "assign_instructor");
-        panelSet.add(queryResult, "query_result");
+        //panelSet.add(queryResult, "query_result");
         panelSet.add(control1);
         panelSet.add(control2);
         panelSet.add(control3);
@@ -65,7 +65,7 @@ public class DatabaseView extends JPanel {
         panelSet.add(control7);
         panelSet.add(control8);
         panelSet.add(control9);
-        panelSet.add(control11);
+        //panelSet.add(control11);
         panelSet.revalidate();
         setLayout("main_menu");
     }
@@ -77,11 +77,14 @@ public class DatabaseView extends JPanel {
     
     public static void setLayout(String s, TableList tl){
         if(s.equals("query_result"))
-             queryResult = new QueryResult(model_old, tl);
-        layout.show(panelSet, s);
+            queryResult = new QueryResult(model_old, tl);
+        panelSet.remove(queryResult);
+        panelSet.add(queryResult, s);
         panelSet.revalidate();
-        panelSet.validate();
         panelSet.repaint();
+        layout.show(panelSet, s);
+ 
+        
     }
 }
 

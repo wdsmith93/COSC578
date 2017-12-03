@@ -2,10 +2,7 @@ package edu.towson;
 
 
 import java.awt.BorderLayout;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -59,7 +56,7 @@ public class QueryResult extends javax.swing.JPanel {
         model.addObserver(mObserver);
         switch(item){
             case STUDENT:
-                keyColumn = 5;
+                keyColumn = 1;
                 tableList = TableList.STUDENT;
                 keyColumnName = "student id#";
                 sql = "SELECT * From STUDENT";
@@ -118,8 +115,7 @@ public class QueryResult extends javax.swing.JPanel {
     
     private void updateTableWithResults(String s) {
             try (Connection conn = Main.connect(); 
-                    PreparedStatement stmt = conn.prepareStatement(s);
-                    PreparedStatement stmt2 = conn.prepareStatement(s)) {	
+                    PreparedStatement stmt = conn.prepareStatement(s)) {	
                 //stmt.setString(1, TODO.getText());
                 rs = stmt.executeQuery();
                 if (!rs.next()) {
@@ -135,6 +131,8 @@ public class QueryResult extends javax.swing.JPanel {
 
             }
             jLabel1.setText(s);
+            jScrollPane1.setViewportView(resultTable);
+
 	}
 
     /**
@@ -160,7 +158,7 @@ public class QueryResult extends javax.swing.JPanel {
         });
 
         jLabel1.setText("Search Result");
-
+       
         resultTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -169,7 +167,7 @@ public class QueryResult extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                
             }
         ));
         jScrollPane1.setViewportView(resultTable);
@@ -239,16 +237,28 @@ public class QueryResult extends javax.swing.JPanel {
     }//GEN-LAST:event_selectRecordEditBtnActionPerformed
 
     private void selectRecordDeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectRecordDeleteBtnActionPerformed
-        String selectedChoice = (String) JOptionPane.showInputDialog(null,
-            "Select " + keyColumnName  + " to delete",
-            "Delete a Record",
-            JOptionPane.QUESTION_MESSAGE,
-            null,
-            options.toArray(),
-            options.get(0));
-        
-        
-        
+//        String selectedChoice =  (String) JOptionPane.showInputDialog(null,
+//            "Select " + keyColumnName  + " to delete",
+//            "Delete a Record",
+//            JOptionPane.QUESTION_MESSAGE,
+//            null,
+//            options.toArray(),
+//            options.get(3));
+//        System.out.println(selectedChoice);
+//        
+    	int row = resultTable.getSelectedRow();
+    	String ssn = (String) resultTable.getValueAt(row, 3);
+    	String sql = "DELETE FROM STUDENT WHERE SSN = "+ssn;
+    	try (Connection conn = Main.connect(); Statement stmt = conn.createStatement()) {
+			int rs = stmt.executeUpdate(sql);
+			System.out.println(rs);
+		} catch (SQLException e) {
+			System.out.println(e);
+
+
+		}
+    	
+    	
         
     }//GEN-LAST:event_selectRecordDeleteBtnActionPerformed
 
