@@ -1,7 +1,6 @@
 package edu.towson;
 
 import java.awt.CardLayout;
-import java.awt.EventQueue;
 import javax.swing.JPanel;
 
 /**
@@ -30,6 +29,7 @@ public class DatabaseView extends JPanel {
         SearchMenu searchMenu = new SearchMenu(model_old);
         AssignAdvisor assignAdvisor = new AssignAdvisor(model_old);
         AssignInstructor assignInstructor = new AssignInstructor(model_old);
+        AddPreferences prefs = new AddPreferences(model_old);
         queryResult = new QueryResult(model_old, item);
         item = queryResult.getQueryResultTableListItem();
         Control control2 = new Control(model_old, mainMenu);
@@ -42,6 +42,7 @@ public class DatabaseView extends JPanel {
         Control control9 = new Control(model_old, assignAdvisor);
         Control control1 = new Control(model_old, assignInstructor);
         Control control11 = new Control(model_old, queryResult, item);
+        Control control12 = new Control(model_old, prefs);
         
         panelSet = this;
         panelSet.setLayout(layout);
@@ -56,6 +57,7 @@ public class DatabaseView extends JPanel {
         panelSet.add(assignAdvisor, "assign_advisor");
         panelSet.add(assignInstructor, "assign_instructor");
         panelSet.add(queryResult, "query_result");
+        panelSet.add(prefs, "preferences");
         panelSet.add(control1);
         panelSet.add(control2);
         panelSet.add(control3);
@@ -66,6 +68,7 @@ public class DatabaseView extends JPanel {
         panelSet.add(control8);
         panelSet.add(control9);
         panelSet.add(control11);
+        panelSet.add(control12);
         panelSet.revalidate();
         setLayout("main_menu");
     }

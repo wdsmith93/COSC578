@@ -7,6 +7,9 @@ import javax.swing.JPanel;
  * @author williamsmith
  */
 public class Control extends JPanel {
+    
+    //TODO: FOr the table not refreshing issue, could I have two diff table objs (here and in dbView?)
+    
     private Model model;
     private MainMenu mainMenu;
     private AddStudent addStudent;
@@ -19,10 +22,16 @@ public class Control extends JPanel {
     private AssignInstructor assignInstructor;
     private QueryResult queryResult;
     private TableList item;
+    private AddPreferences prefs; 
     
     public Control(Model model, SearchMenu sm) {
         this.model = model;
         this.searchMenu = sm;
+    }
+    
+    public Control(Model model, AddPreferences ap) {
+        this.model = model;
+        this.prefs = ap;
     }
     
     public Control(Model model, AddAdmin aa) {
