@@ -13,7 +13,8 @@ import java.awt.BorderLayout;
  */
 public class AddAdmin extends javax.swing.JPanel {
 
-    private DatabaseView.Model model;
+    private Model model = new Model();
+    Model.ModelObserver mObserver = model.new ModelObserver();
     /**
      * Creates new form AddAdmin
      */
@@ -21,10 +22,10 @@ public class AddAdmin extends javax.swing.JPanel {
         initComponents();
     }
     
-    public AddAdmin(DatabaseView.Model model) {
+    public AddAdmin(Model model) {
         super(new BorderLayout());
         this.model = model;
-        //model.addObserver(new DatabaseView.View.ModelObserver());
+        model.addObserver(mObserver);
         
         initComponents();
         

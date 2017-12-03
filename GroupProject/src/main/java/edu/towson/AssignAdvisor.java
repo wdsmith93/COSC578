@@ -12,7 +12,8 @@ import javax.swing.JOptionPane;
  */
 public class AssignAdvisor extends javax.swing.JPanel {
 
-    private DatabaseView.Model model;
+    private Model model = new Model();
+    Model.ModelObserver mObserver = model.new ModelObserver();
     
     /**
      * Creates new form AssignAdvisor
@@ -21,9 +22,10 @@ public class AssignAdvisor extends javax.swing.JPanel {
         initComponents();
     }
     
-    public AssignAdvisor(DatabaseView.Model model) {
+    public AssignAdvisor(Model model) {
         super(new BorderLayout());
         this.model = model;
+        model.addObserver(mObserver);
         
         initComponents();
     }

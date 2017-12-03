@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.towson;
 
 import java.awt.BorderLayout;
@@ -13,7 +8,8 @@ import java.awt.BorderLayout;
  */
 public class SearchMenu extends javax.swing.JPanel {
 
-    private DatabaseView.Model model;
+    private Model model = new Model();
+    Model.ModelObserver mObserver = model.new ModelObserver();
     /**
      * Creates new form SearchMenu
      */
@@ -21,12 +17,15 @@ public class SearchMenu extends javax.swing.JPanel {
         initComponents();
     }
     
-    public SearchMenu(DatabaseView.Model model) {
+    public SearchMenu(Model model) {
         super(new BorderLayout());
         this.model = model;
-        //model.addObserver(new DatabaseView.View.ModelObserver());
+        model.addObserver(mObserver);
         
         initComponents();
+        String[] queryList = new String[]{" ", "View all students", "View all instructors", "", "", 
+            ""};
+        querySelectCB.setModel(new javax.swing.DefaultComboBoxModel<>(queryList));
     }
 
     /**
@@ -39,6 +38,7 @@ public class SearchMenu extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         sm_mainMenu = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        querySelectCB = new javax.swing.JComboBox<>();
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Search Menu");
@@ -59,18 +59,32 @@ public class SearchMenu extends javax.swing.JPanel {
             }
         });
 
+        querySelectCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        querySelectCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                querySelectCBActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(157, 157, 157)
-                .addComponent(jLabel1)
-                .addContainerGap(164, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(sm_mainMenu)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
+                        .addComponent(sm_mainMenu))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(157, 157, 157)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(148, 148, 148)
+                                .addComponent(querySelectCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -78,7 +92,9 @@ public class SearchMenu extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 243, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(querySelectCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 198, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sm_mainMenu)
                     .addComponent(jButton1))
@@ -96,14 +112,38 @@ public class SearchMenu extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String cmd = evt.getActionCommand();
             if ("Test ResultsTable".equals(cmd)) {
-                model.goToQueryResult();
+                model.goToQueryResult(TableList.STUDENT);
             }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void querySelectCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_querySelectCBActionPerformed
+        int selection = querySelectCB.getSelectedIndex();
+        switch(selection){
+            case 1:
+                //DatabaseView.setItem(TableList.STUDENT);
+                model.goToQueryResult(TableList.STUDENT);
+                break;
+            case 2:
+                //DatabaseView.setItem(TableList.INSTRUCTOR);
+                model.goToQueryResult(TableList.INSTRUCTOR);
+                break;
+            case 3:
+                //TODO
+                break;
+            case 4:
+                //TODO
+                break;
+            case 5:
+                //TODO
+                break;
+        }
+    }//GEN-LAST:event_querySelectCBActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox<String> querySelectCB;
     private javax.swing.JButton sm_mainMenu;
     // End of variables declaration//GEN-END:variables
 }
