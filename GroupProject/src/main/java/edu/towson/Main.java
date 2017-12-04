@@ -323,12 +323,14 @@ public class Main implements Runnable {
      * @param dob student date of birth
      * @param date_issue id card issue date
      * @param expire_date id card expire date
-     * @param adminId admin id who issued id card
+     * @param sidIssuedTo id is issued to whom
+     * @param sProof_Id proof of the provider
+     * 
      */
     
 	private static void insertIntoSidCard(String idNo, String sName, String sex, String dob, String date_issue,
-			String expire_date, int adminId) {
-		String sql = "INSERT INTO IDCARD(Id_No , Name , Sex , DOB , Date_Issued , Expire_Date, Admin_id ) VALUES(?,?,?,?,?,?,?)";
+			String expire_date,String sidIssuedTo,String sProof_Id) {
+		String sql = "INSERT INTO IDCARD(Id_No , Name , Sex , DOB , Date_Issued , Expire_Date,Issued_To,Proof_Id ) VALUES(?,?,?,?,?,?,?,?)";
 
 		try (Connection conn = Main.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setString(1, idNo);
@@ -337,7 +339,8 @@ public class Main implements Runnable {
 			pstmt.setString(4, dob);
 			pstmt.setString(5, date_issue);
 			pstmt.setString(6, expire_date);
-			pstmt.setString(7, String.valueOf(adminId));
+			pstmt.setString(7, sidIssuedTo);
+			pstmt.setString(8, sProof_Id);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -356,9 +359,14 @@ public class Main implements Runnable {
 		String[] dob = new String[100];
 		String[] date_issue = new String[100];
 		String[] expire_date = new String[100];
+		String[] sidIssuedTo = new String[100];
+		String[] sProof_Id = new String[100];
 		String[] genderArray = new String[] { "M", "F" };
 		String[] idIssueArray = new String[] { "2017-08-28", "2017-08-28", "2017-09-25", "2017-10-23", "2018-01/02" };
 		String[] idExpireArray = new String[] { "2017-12-15", "2017-10-21", "2017-12-15", "2017-12-15", "2018-01-21" };
+		String[] issuedTo = new String[]{"Student","Staff","Visitor"};
+		String genProofId = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+		Random random = new Random();
 		GregorianCalendar calendar = new GregorianCalendar();
 		int[] adminId = new int[100];
 		for (int i = 0; i < idNo.length; i++) {
@@ -375,11 +383,19 @@ public class Main implements Runnable {
 			calendar.set(calendar.DAY_OF_YEAR, dayOfYear);
 			dob[i] = calendar.get(calendar.YEAR) + "-" + (calendar.get(calendar.MONTH) + 1) + "-"
 					+ calendar.get(calendar.DAY_OF_MONTH);
-			adminId[i] = Integer.valueOf(genRandomNumber(100000, 100100));
+	//		adminId[i] = Integer.valueOf(genRandomNumber(100000, 100100));
+			sidIssuedTo[i] = pickFromArray(issuedTo);
+			int len = 10;
+			String result = "";
+			for (int m = 0; m < len; m++) {
+				int index = (int) (random.nextFloat() * genProofId.length());
+				result += genProofId.charAt(index);
+			}
+			sProof_Id[i] = result;
 
 		}
 		for (int j = 0; j < idNo.length; j++) {
-			insertIntoSidCard(idNo[j], sName[j], sex[j], dob[j], date_issue[j], expire_date[j], adminId[j]);
+			insertIntoSidCard(idNo[j], sName[j], sex[j], dob[j], date_issue[j], expire_date[j],sidIssuedTo[j],sProof_Id[j]);
 		}
 	}
 	
@@ -715,8 +731,8 @@ public class Main implements Runnable {
                         + "PRIMARY KEY(Course_Id,PreReqId)," + "FOREIGN KEY (Course_Id) REFERENCES COURSE(Course_Id))";
 
         String IdCard = "CREATE TABLE IF NOT EXISTS IDCARD " + "(Id_No VARCHAR(15) NOT NULL," + " Name VARCHAR(35),"
-                        + "Sex VARCHAR(2), " + "DOB DATE," + "Date_Issued DATE," + "Expire_Date DATE," + "Admin_id VARCHAR(15),"
-                        + "PRIMARY KEY(Id_No)," + "FOREIGN KEY (Admin_Id) REFERENCES ADMIN(Admin_Id))";
+        				+ "Sex VARCHAR(10), " + "DOB DATE," + "Date_Issued DATE," + "Expire_Date DATE," + "Issued_To VARCHAR(20),"
+        				+"Proof_Id VARCHAR(30)," + "PRIMARY KEY(Id_No))";
 
         String Admin = "CREATE TABLE IF NOT EXISTS ADMIN " + "(Admin_Id VARCHAR(15) NOT NULL," + " FName VARCHAR(35),"
                         + " Middle VARCHAR(35)," + " LName VARCHAR(35)," + " Username VARCHAR(70)," + "Password VARCHAR(30),"
