@@ -6,6 +6,13 @@
 package edu.towson;
 
 import java.awt.BorderLayout;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -120,7 +127,107 @@ public class DropCourse extends javax.swing.JPanel {
     private void dc_dropBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dc_dropBtnActionPerformed
         // TODO add your handling code here:
         //NAVYA: Do you have time to wire this up?
+    	boolean cIdIsValid = checkCourseId();
+        boolean sIdIsValid = checkStudentSsn();
+        boolean regIsValid= checkRegisterd();
+        boolean showErrorMsg = false;
+        String errorMessage = "";
+        
+        String sql = "DELETE FROM ENROLLS WHERE SSN ="+dc_enterIdNum.getText()+" AND Course_Id = "+dc_courseIdNum.getText();
+        
+        if (sIdIsValid == true && cIdIsValid == true && regIsValid == true){
+		try (Connection conn = Main.connect(); Statement stmt = conn.createStatement()) {
+			int rs = stmt.executeUpdate(sql);
+			JOptionPane.showMessageDialog(null, "Successfully withdrawn course");
+			dc_enterIdNum.setText("");
+			dc_courseIdNum.setText("");
+		} catch (SQLException e) {
+
+		}
+        } else {
+            if(cIdIsValid == false){
+                errorMessage = errorMessage + "Please enter a valid course id\n";
+                showErrorMsg = true;
+            }
+            if(sIdIsValid == false){
+                errorMessage = errorMessage + "Please enter a valid SSN\n";
+                showErrorMsg = true;
+            }
+            if(cIdIsValid && sIdIsValid && regIsValid == false){
+                errorMessage = errorMessage + "Not registered for the course\n";
+                showErrorMsg = true;
+            }
+          
+        }
+        if(showErrorMsg == true){
+            JOptionPane.showMessageDialog(null, errorMessage);
+        }
     }//GEN-LAST:event_dc_dropBtnActionPerformed
+    
+    private boolean checkCourseId() {
+		boolean result = false;
+
+		String sql = "SELECT * From COURSE WHERE Course_Id = ?";
+		try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, dc_courseIdNum.getText());
+			ResultSet rs = stmt.executeQuery();
+
+			if (!rs.next()) {
+				result = false;
+			} else {
+				result = true;
+			}
+
+		} catch (SQLException e) {
+
+		}
+		return result;
+
+	}
+    
+    private boolean checkStudentSsn() {
+		boolean result = false;
+
+		String sql = "SELECT * From STUDENT WHERE SSN = ?";
+		try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, dc_enterIdNum.getText());
+			ResultSet rs = stmt.executeQuery();
+
+			if (!rs.next()) {
+				result = false;
+			} else {
+				result = true;
+			}
+
+		} catch (SQLException e) {
+
+		}
+		return result;
+
+	}
+    
+    private boolean checkRegisterd() {
+		boolean result = false;
+
+		String sql = "SELECT * From ENROLLS WHERE SSN = ? AND Course_Id =?";
+		try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, dc_enterIdNum.getText());
+			stmt.setString(2, dc_courseIdNum.getText());
+			ResultSet rs = stmt.executeQuery();
+
+			if (!rs.next()) {
+				result = false;
+			} else {
+				result = true;
+			}
+
+		} catch (SQLException e) {
+
+		}
+		return result;
+
+	}
+
 
     private void dc_mainMenuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dc_mainMenuBtnActionPerformed
         String cmd = evt.getActionCommand();
