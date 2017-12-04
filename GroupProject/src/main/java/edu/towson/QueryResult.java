@@ -2,6 +2,8 @@ package edu.towson;
 
 
 import java.awt.BorderLayout;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,8 +74,10 @@ public class QueryResult extends javax.swing.JPanel {
                 keyColumnName = "SSN#";
                 break;
         case COURSE:
-                //keyColumn = 1;
-                //keyColumnName = "course id#";
+                keyColumn = 1;
+                tableList = TableList.COURSE;
+                keyColumnName = "course id#";
+                sql = "SELECT * From COURSE";
                 break;
         case INSTRUCTOR:
                 keyColumn = 1;
@@ -84,7 +88,9 @@ public class QueryResult extends javax.swing.JPanel {
                 break;
         case DEPARTMENT:
                 keyColumn = 2;
+                tableList = TableList.DEPARTMENT;
                 keyColumnName = "department#";
+                sql = "SELECT * From DEPARTMENT";
                 break;
         case PREREQUESITE:
             //TODO: For this we need to show option for composite key?
@@ -93,7 +99,9 @@ public class QueryResult extends javax.swing.JPanel {
                 break;
         case IDCARD:
                 keyColumn = 1;
+                tableList = TableList.IDCARD;
                 keyColumnName = "id card#";
+                sql = "SELECT * From IDCARD";
                 break;
         case ADMIN:
                 keyColumn = 1;
@@ -102,13 +110,41 @@ public class QueryResult extends javax.swing.JPanel {
         case CLASSROOM:
                 keyColumn = 1;
                 keyColumnName = "class id#";
+                sql = "SELECT * From CLASSROOM";
                 break;
         case CLASSCOURSE:
             //TODO: For this we need to show option for composite key?
                 keyColumn = 1;
                 keyColumnName = "class id#";
                 break;
+        case COMPLEX_QUERY1:
+                keyColumn = 4;
+                keyColumnName = "course id#";
+                sql = "SELECT s.FName, s.Middle, s.LName, c.Course_Id, c.Course_Title, e.Grade FROM STUDENT s, ENROLLS e, COURSE c WHERE s.SSN = e.SSN AND c.Course_Id=e.Course_Id";
+                break;
+        case COMPLEX_QUERY2:
+                keyColumn = 4;
+                keyColumnName = "course id#";
+                sql = "SELECT i.First, i.Middle, i.Last, d.Dept_Num FROM INSTRUCTOR i, DEPARTMENT d WHERE i.Dept_Num=d.Dept_Num";
+                break;
+        case COMPLEX_QUERY3:
+                keyColumn = 4;
+                keyColumnName = "course id#";
+                sql = "SELECT i.Instructor_Id, i.First, i.Middle, i.Last, c.Course_Title FROM COURSE c, INSTRUCTOR i WHERE c.Instructor_Id=i.Instructor_Id";
+                break;
+        case COMPLEX_QUERY4:
+                keyColumn = 4;
+                keyColumnName = "course id#";
+                sql = "SELECT Class_Id FROM CLASSROOM WHERE Location ='Liberty Heights'";
+                break;
+        case COMPLEX_QUERY5:
+                keyColumn = 4;
+                keyColumnName = "course id#";
+                sql = "SELECT s.FName, s.LName, i.First, i.Last FROM STUDENT s, INSTRUCTOR i WHERE s.Advisor_Id=i.Instructor_Id;";
+                break;
+        
         }
+        
         initComponents();
         updateTableWithResults(sql);
     }
@@ -130,6 +166,7 @@ public class QueryResult extends javax.swing.JPanel {
             } catch (SQLException e) {
 
             }
+            
             jLabel1.setText(s);
             jScrollPane1.setViewportView(resultTable);
 
@@ -158,7 +195,10 @@ public class QueryResult extends javax.swing.JPanel {
         });
 
         jLabel1.setText("Search Result");
-       
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
         resultTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -167,9 +207,10 @@ public class QueryResult extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        resultTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane1.setViewportView(resultTable);
 
         selectRecordEditBtn.setForeground(new java.awt.Color(206, 17, 38));
@@ -202,12 +243,11 @@ public class QueryResult extends javax.swing.JPanel {
                         .addComponent(selectRecordEditBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(mainMenuBtn))
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(175, 175, 175)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

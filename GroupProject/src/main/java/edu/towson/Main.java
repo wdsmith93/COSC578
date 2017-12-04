@@ -9,7 +9,9 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.sql.*;
 import java.util.GregorianCalendar;
 import java.util.Random;
+import java.util.logging.Level;
 import javax.swing.JFrame;
+import java.util.logging.Logger;
 
 public class Main implements Runnable {
 
@@ -26,6 +28,8 @@ public class Main implements Runnable {
     private static String[] zipCodeArray = new String[432];
     private static String[] statesArray = new String[10];
     private static Random rand = new Random(System.currentTimeMillis());
+    
+    private static final Logger logger = Logger.getLogger("Main.class");
    
     
     
@@ -60,6 +64,7 @@ public class Main implements Runnable {
      */
     public static void populateDB() {
 
+        createTables();
         initDepartment();
         initInstructor();
         initClassroom();
@@ -87,7 +92,7 @@ public class Main implements Runnable {
             pstmt.setString(2, preReqId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.INFO, "Failed to insert into PREREQUISITE.", e);
         }
     }
     
@@ -124,7 +129,7 @@ public class Main implements Runnable {
             pstmt.setString(2, sSSN);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.INFO, "Failed to insert into STUDENT.", e);
         }
     }
     
@@ -160,7 +165,7 @@ public class Main implements Runnable {
             pstmt.setString(3, sGrade);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.INFO, "Failed to insert into ENROLLS.", e);
         }
     }
     
@@ -198,7 +203,7 @@ public class Main implements Runnable {
             pstmt.setString(3, begin);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.INFO, "Failed to insert into CLASSCOURSE.", e);
         }
     }
     
@@ -258,7 +263,7 @@ public class Main implements Runnable {
 			pstmt.setInt(12, sAdvisorId);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+            logger.log(Level.INFO, "Failed to insert into STUDENT.", e);
 		}
 
 	}
@@ -286,7 +291,7 @@ public class Main implements Runnable {
 		GregorianCalendar calendar = new GregorianCalendar();
 		for (int i = 0; i < sSSN.length; i++) {
 			sFname[i] = pickFromArray(firstNameArray);
-			sMiddle[i] = "";
+			sMiddle[i] = pickFromArray(firstNameArray);
 			sLname[i] = pickFromArray(lastNameArray);
 			sSSNId = sSSNId+1;
 			sSSN[i] = String.valueOf(sSSNId);
@@ -343,7 +348,7 @@ public class Main implements Runnable {
 			pstmt.setString(8, sProof_Id);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+            logger.log(Level.INFO, "Failed to insert into IDCARD.", e);
 		}
         }
           
@@ -432,7 +437,7 @@ public class Main implements Runnable {
 			pstmt.setString(6, aPassword);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+            logger.log(Level.INFO, "Failed to insert into ADMIN.", e);
 		}
 
 	}
@@ -499,7 +504,7 @@ public class Main implements Runnable {
             pstmt.setInt(6, iId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.INFO, "Failed to insert into COURSE.", e);
         }
     }
     
@@ -556,7 +561,7 @@ public class Main implements Runnable {
             pstmt.setInt(3, capacity);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.INFO, "Failed to insert into CLASSROOM.", e);
         }
     }
     
@@ -602,7 +607,7 @@ public class Main implements Runnable {
             pstmt.setInt(5, dNum);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.INFO, "Failed to insert into INSTRUCTOR.", e);
         }
     }
     
@@ -651,7 +656,7 @@ public class Main implements Runnable {
             pstmt.setString(4, phNum);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.INFO, "Failed to insert into DEPARTMENT.", e);
         }
     }
     
@@ -689,11 +694,12 @@ public class Main implements Runnable {
         try {
             Class.forName(jdbcDriver);
             // Register JDBC driver
-            System.out.println("Connecting to database");
-            con = DriverManager.getConnection(dbAddress + dbName, userName, password);
-            System.out.println("Connecting to database successful");
+            //System.out.println("Connecting to database");
+            con = DriverManager.getConnection(dbAddress + dbName + "?verifyServerCertificate=false&useSSL=true", userName, password);
+            //System.out.println("Connecting to database successful");
         } catch (ClassNotFoundException | SQLException e1) {
-            e1.printStackTrace();
+            //e1.printStackTrace();
+            logger.log(Level.INFO, "Failed to establish connection in Connection method.", e1);
         } 
         return con;
     }
@@ -762,7 +768,8 @@ public class Main implements Runnable {
         } catch (SQLException e) {
 
         }
-        System.out.println("Table created");
+        //System.out.println("Table created");
+        logger.log(Level.INFO, "Table created");
     }
 
     /**
@@ -782,7 +789,7 @@ public class Main implements Runnable {
                 count++;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.INFO, "Failed to read " + filename + "from file.", e);
         }
     }
     
