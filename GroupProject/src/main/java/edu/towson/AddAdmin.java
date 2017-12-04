@@ -6,6 +6,12 @@
 package edu.towson;
 
 import java.awt.BorderLayout;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -263,7 +269,67 @@ public class AddAdmin extends javax.swing.JPanel {
 
     private void aa_addDataBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aa_addDataBtnActionPerformed
         // TODO Navya could you add logic here to perform the write of the form info to the database?
+    	boolean sIdIsValid = checkId();
+		boolean showErrorMsg = false;
+		String errorMessage = "";
+		String sql = "INSERT INTO IDCARD(Id_No , Name , Sex , DOB , Date_Issued , Expire_Date, Issued_To,Proof_Id ) VALUES(?,?,?,?,?,?,?,?)";
+		if (sIdIsValid == true) {
+			try (Connection conn = Main.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+				pstmt.setString(1, adad_idNum.getText());
+				pstmt.setString(2, adad_name.getText());
+				if(adad_maleBtn.isSelected()){
+					pstmt.setString(3, adad_maleBtn.getText());	
+				}
+				else {
+					pstmt.setString(3, adad_femaleBtn.getText());
+				}
+				pstmt.setString(4, adad_dob.getText());
+				pstmt.setString(5, adad_providedIdDateIssued.getText());
+				pstmt.setString(6, adad_providedIdExpirationDate.getText());
+				pstmt.setString(7, String.valueOf(adad_chooseStatusComboBx.getSelectedItem()));
+				pstmt.setString(8, adad_providedIdNum.getText());
+				pstmt.executeUpdate();
+				JOptionPane.showMessageDialog(null, "Successfully issued Idcard");
+				adad_idNum.setText("");
+				adad_name.setText("");
+				adad_dob.setText("");
+				adad_providedIdDateIssued.setText("");
+				adad_providedIdExpirationDate.setText("");
+				adad_providedIdNum.setText("");
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		} else {
+			if (sIdIsValid == false) {
+				errorMessage = errorMessage + "Duplicate ID \n";
+				showErrorMsg = true;
+			}
+		}
+		if (showErrorMsg == true) {
+			JOptionPane.showMessageDialog(null, errorMessage);
+		}
     }//GEN-LAST:event_aa_addDataBtnActionPerformed
+
+    private boolean checkId() {
+		boolean result = false;
+
+		String sql = "SELECT * From IDCARD WHERE Id_No = ?";
+		try (Connection conn = Main.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+			stmt.setString(1, adad_idNum.getText());
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				result = false;
+			} else {
+				result = true;
+			}
+
+		} catch (SQLException e) {
+
+		}
+		return result;
+
+	}
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
