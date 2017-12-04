@@ -25,7 +25,8 @@ public class SearchMenu extends javax.swing.JPanel {
         initComponents();
         String[] queryList = new String[]{" ", "View all students", "View all instructors", "View all courses", "View all classrooms", 
             "View all ID card records", "Name, Course, Grade", "Instructor Names, Departments", 
-            "Instructors, courses", "All classes in Liberty Heights", "Students with instructor advisors"};
+            "Instructors, courses", "All classes in Liberty Heights", "Students with instructor advisors", 
+            "Grades for Students with Grants"};
         querySelectCB.setModel(new javax.swing.DefaultComboBoxModel<>(queryList));
     }
 
@@ -151,6 +152,9 @@ public class SearchMenu extends javax.swing.JPanel {
                 break;
             case 10:
                 model.goToQueryResult(TableList.COMPLEX_QUERY5);
+                break;
+            case 11:
+                model.goToQueryResult(TableList.COMPLEX_QUERY6);
                 break;
         }
     }//GEN-LAST:event_querySelectCBActionPerformed
