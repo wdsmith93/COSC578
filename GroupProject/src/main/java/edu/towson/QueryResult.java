@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 /**
  *
@@ -140,7 +141,12 @@ public class QueryResult extends javax.swing.JPanel {
         case COMPLEX_QUERY5:
                 keyColumn = 4;
                 keyColumnName = "course id#";
-                sql = "SELECT s.FName, s.LName, i.First, i.Last FROM STUDENT s, INSTRUCTOR i WHERE s.Advisor_Id=i.Instructor_Id;";
+                sql = "SELECT s.FName, s.LName, i.First, i.Last FROM STUDENT s, INSTRUCTOR i WHERE s.Advisor_Id=i.Instructor_Id";
+                break;
+        case COMPLEX_QUERY6:
+                keyColumn = 4;
+                keyColumnName = "course id#";
+                sql = "SELECT s.FName, s.Middle, s.LName, s.Grant_Auth, c.Course_Id, c.Course_Title, e.Grade FROM STUDENT s, ENROLLS e, COURSE c WHERE s.SSN = e.SSN AND (s.Grant_Auth IS NOT NULL AND s.Grant_Auth <> 'N')  AND c.Course_Id=e.Course_Id";
                 break;
         
         }
@@ -167,7 +173,17 @@ public class QueryResult extends javax.swing.JPanel {
 
             }
             
-            jLabel1.setText(s);
+            //jLabel1.setText(s);
+            jTextArea1.setText(s);
+            jTextArea1.setWrapStyleWord(true);
+            jTextArea1.setLineWrap(true);
+            jTextArea1.setOpaque(false);
+            jTextArea1.setEditable(false);
+            jTextArea1.setFocusable(false);
+            jTextArea1.setBackground(UIManager.getColor("Label.background"));
+            jTextArea1.setFont(UIManager.getFont("Label.font"));
+            jTextArea1.setBorder(UIManager.getBorder("Label.border"));
+            
             jScrollPane1.setViewportView(resultTable);
 
 	}
@@ -185,6 +201,8 @@ public class QueryResult extends javax.swing.JPanel {
         resultTable = new javax.swing.JTable();
         selectRecordEditBtn = new javax.swing.JButton();
         selectRecordDeleteBtn = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         mainMenuBtn.setForeground(new java.awt.Color(206, 17, 38));
         mainMenuBtn.setText("Main Menu");
@@ -230,6 +248,10 @@ public class QueryResult extends javax.swing.JPanel {
             }
         });
 
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -237,16 +259,17 @@ public class QueryResult extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(mainMenuBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(selectRecordDeleteBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(selectRecordEditBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(mainMenuBtn))
-                    .addComponent(jScrollPane1)
+                        .addComponent(selectRecordEditBtn))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -255,12 +278,14 @@ public class QueryResult extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mainMenuBtn)
                     .addComponent(selectRecordDeleteBtn)
-                    .addComponent(selectRecordEditBtn))
+                    .addComponent(selectRecordEditBtn)
+                    .addComponent(mainMenuBtn))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -306,6 +331,8 @@ public class QueryResult extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton mainMenuBtn;
     private javax.swing.JTable resultTable;
     private javax.swing.JButton selectRecordDeleteBtn;

@@ -287,7 +287,7 @@ public class Main implements Runnable {
 		String[] sGrantAuth = new String[100];
 		String[] sEmailId = new String[100];
 		String[] genderArray = new String[] { "M", "F" };
-		String[] granthStatus = new String[] { "Y", "N" };
+		//String[] granthStatus = new String[] { "Y", "N" };
 		GregorianCalendar calendar = new GregorianCalendar();
 		for (int i = 0; i < sSSN.length; i++) {
 			sFname[i] = pickFromArray(firstNameArray);
@@ -309,7 +309,8 @@ public class Main implements Runnable {
 			dob[i] = calendar.get(calendar.YEAR) + "-" + (calendar.get(calendar.MONTH) + 1) + "-"
 					+ calendar.get(calendar.DAY_OF_MONTH);
 			sAdvisorId[i] = Integer.valueOf(genRandomNumber(10000000, 10000100));
-			sGrantAuth[i] = pickFromArray(granthStatus);
+			//sGrantAuth[i] = pickFromArray(granthStatus);
+                        sGrantAuth[i] = String.valueOf(randBetween(12345, 999999));
 			sEmailId[i] = generateEmailAddress(sFname[i], sLname[i]);
 		}
 		for (int j = 0; j < sSSN.length; j++) {
