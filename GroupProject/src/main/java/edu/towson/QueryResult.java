@@ -7,6 +7,9 @@ import java.awt.event.ComponentEvent;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -277,30 +280,88 @@ public class QueryResult extends javax.swing.JPanel {
     }//GEN-LAST:event_selectRecordEditBtnActionPerformed
 
     private void selectRecordDeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectRecordDeleteBtnActionPerformed
-//        String selectedChoice =  (String) JOptionPane.showInputDialog(null,
-//            "Select " + keyColumnName  + " to delete",
-//            "Delete a Record",
-//            JOptionPane.QUESTION_MESSAGE,
-//            null,
-//            options.toArray(),
-//            options.get(3));
-//        System.out.println(selectedChoice);
-//        
-    	int row = resultTable.getSelectedRow();
-    	String ssn = (String) resultTable.getValueAt(row, 3);
-    	String sql = "DELETE FROM STUDENT WHERE SSN = "+ssn;
+        String selectedChoice =  (String) JOptionPane.showInputDialog(null,
+            "Select " + keyColumnName  + " to delete",
+            "Delete a Record",
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            options.toArray(),
+            options.get(3));
+        System.out.println(selectedChoice);      
+ //   	int row = resultTable.getSelectedRow();
+ //   	String ssn = (String) resultTable.getValueAt(row, 3);
+    	/*String sql = "DELETE FROM STUDENT WHERE SSN = "+ssn;
     	try (Connection conn = Main.connect(); Statement stmt = conn.createStatement()) {
 			int rs = stmt.executeUpdate(sql);
+			JOptionPane.showMessageDialog(null, "Successfully deleted record");
 			System.out.println(rs);
 		} catch (SQLException e) {
-			System.out.println(e);
+			//System.out.println(e);
+			logger.log(Level.INFO, "Failed to delete from STUDENT.", e);
+			JOptionPane.showMessageDialog(null, "Cannot delete! Foriegn Key constraint");
 
-
-		}
-    	
-    	
+		}*/
+        deleteResult(model, tableList);
+      }//GEN-LAST:event_selectRecordDeleteBtnActionPerformed
+    
+    public void deleteResult(Model model, TableList item) {
+        this.model = model;
+        this.tableList = item;
+        model.addObserver(mObserver);
+        int row = resultTable.getSelectedRow();
+        switch(item){
+        case STUDENT:
+               keyColumn = 1;
+               tableList = TableList.STUDENT;
+               keyColumnName = "student id#";
+               String ssn = (String) resultTable.getValueAt(row, 3);
+               sql = "DELETE FROM STUDENT WHERE SSN = "+ssn;
+               break;
+       case COURSE:
+               keyColumn = 1;
+               tableList = TableList.COURSE;
+               keyColumnName = "course id#";
+               String courseId = (String) resultTable.getValueAt(row, 0);
+               sql = "DELETE FROM COURSE WHERE Course_Id = "+courseId;
+               break;
+       case INSTRUCTOR:
+               keyColumn = 1;
+               //DatabaseView.setItem(TableList.INSTRUCTOR);
+               tableList = TableList.INSTRUCTOR;
+               keyColumnName = "instructor id#";
+               int instructorId = (Integer) resultTable.getValueAt(row, 0);
+               sql = "DELETE FROM INSTRUCTOR WHERE Instructor_Id = "+instructorId;
+               break;
+       case IDCARD:
+               keyColumn = 1;
+               tableList = TableList.IDCARD;
+               keyColumnName = "id card#";
+               String sId = (String) resultTable.getValueAt(row, 0);
+               sql = "DELETE FROM IDCARD WHERE Id_No = "+sId;
+               break;
+       case CLASSROOM:
+           keyColumn = 1;
+           keyColumnName = "class id#";
+           int classId = (Integer) resultTable.getValueAt(row, 0);
+           sql = "DELETE FROM CLASSROOM WHERE Class_Id = "+classId;
+           break;
+        }
         
-    }//GEN-LAST:event_selectRecordDeleteBtnActionPerformed
+        deleteRecWithResults(sql);
+    }
+    
+    private void deleteRecWithResults(String s) {
+        try (Connection conn = Main.connect(); 
+                PreparedStatement stmt = conn.prepareStatement(s)) {	
+            //stmt.setString(1, TODO.getText());
+           int rs = stmt.executeUpdate();
+           JOptionPane.showMessageDialog(null, "Deletion successful");
+            conn.close();
+        } catch (SQLException e) {
+        	//logger.log(Level.INFO, "Failed to delete.", e);
+			JOptionPane.showMessageDialog(null, "Cannot delete! Foriegn Key constraint");
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
